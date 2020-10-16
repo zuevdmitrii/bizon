@@ -9,11 +9,22 @@ const global = (function() {
    return this || (0, eval)('this');
 })();
 
+const indexFile = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+
 const clients = {};
 
 app.use(express.static(resourcesPath));
 const port = process.env.PORT || 777;
 var expressServer = app.listen(port);
+
+app.get('/task/*', (req, res) => {
+  res.send(indexFile);
+});
+
+app.get('/employes/*', (req, res) => {
+  res.send(indexFile);
+});
+
 console.log('app available on port ' + port);
 
 // websockets
