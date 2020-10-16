@@ -9,12 +9,12 @@ import { Staff } from "./Staff";
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
-    // webSocketControllerInstance.call({type:'employeeCreate', data: {firstName: 'Vladislav2', lastName: 'Bondarenko', role: 'CEO'}}).then((data) => {
+    // webSocketControllerInstance.call({type:'employeeCreate', data: {firstName: 'Vladislav2', lastName: 'Bondarenko', role: 'CEO', email: 'bondarencko40@gmail.com'}}).then((data) => {
     //   console.log(data)
     // })
-    webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
-      console.log(data)
-    })
+    // webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
+    //   console.log(data)
+    // })
 
     //get by ID
     // webSocketControllerInstance.call({type:'employeeGet', data: {id: '5f8a1497806a3424eaec10db'}}).then((data) => {
