@@ -26,6 +26,31 @@ const pathes: IObjectAny = {
       path: "task",
     },
   ],
+
+  persons: [
+    {
+      title: "Главная",
+      path: "/",
+    },
+    {
+      title: "Сотрудники",
+      path: "persons",
+    },
+  ],
+  person: [
+    {
+      title: "Главная",
+      path: "/",
+    },
+    {
+      title: "Сотрудники",
+      path: "/persons/",
+    },
+    {
+      title: "Сотрудник",
+      path: "person",
+    },
+  ],
 };
 export const BreadCrumbs = () => {
   const page = window.location.pathname.split("/")[1] || "";
