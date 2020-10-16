@@ -15,7 +15,7 @@ declare type ISlides<T> = {
 
 declare type IPresentation = {
   currentSlide: string;
-  countClients: number; 
+  countClients: number;
   className: string;
 }
 

@@ -8,7 +8,10 @@ import { webSocketControllerInstance }    from '../WebSocketInstance';
 export const Main = (props: HashMap<any>) =>  {
 
   React.useEffect(() => {
-    webSocketControllerInstance.send({type:'getEmployees', data: {}});
+    webSocketControllerInstance.call({type:'getEmployees', data: {}}).then((data) => {
+      console.log(data)
+    })
+    // webSocketControllerInstance.send({type:'getEmployees', data: {}});
   }, [])
 
   return (
