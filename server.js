@@ -1,5 +1,5 @@
 // const getEmployees = require('./src/handlers/getEmployees')
-const Employee = require("./src/models/Employee.ts")
+const Employee = require("./server/models/Employee")
 const mongoose = require("mongoose");
 const root = process.cwd(),
       path = require('path'),
@@ -83,6 +83,7 @@ app.use(express.static(resourcesPath));
         async function handleMessage(data, id) {
             switch (data.type) {
                 case "getEmployees":
+                    console.log('test')
                     const result = await Employee.find()
                     console.log(result)
                 // ws.send(result)
