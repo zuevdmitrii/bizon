@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorzuev/vote.git"
+    "url": "https://github.com/zuevdmitrii/bizon.git"
   },
   "files": [
     "src/*"
@@ -11,6 +11,7 @@
   "scripts": {
     "postinstall": "npm run build",
     "build": "webpack",
+    "build:dev": "webpack -w",
     "build:log": "webpack --bail --env dist -p",
     "start": "node server.js"
   },
