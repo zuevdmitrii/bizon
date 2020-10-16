@@ -12,9 +12,9 @@ export const Main = (props: HashMap<any>) => {
     // webSocketControllerInstance.call({type:'employeeCreate', data: {firstName: 'Vladislav2', lastName: 'Bondarenko', role: 'CEO'}}).then((data) => {
     //   console.log(data)
     // })
-    // webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
-    //   console.log(data)
-    // })
+    webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
+      console.log(data)
+    })
 
     //get by ID
     // webSocketControllerInstance.call({type:'employeeGet', data: {id: '5f8a1497806a3424eaec10db'}}).then((data) => {
@@ -30,9 +30,9 @@ export const Main = (props: HashMap<any>) => {
     //       .call({ type: "employeeUpdate", data: {...data, firstName: 'Vladislav'} }).then(res => console.log(res))
     //   });
 
-     webSocketControllerInstance.call({type:'employeeDelete', data: {id: '5f8a1ac9d50d43299954d9f4'}}).then((data) => {
-      console.log(data)
-    })
+    //  webSocketControllerInstance.call({type:'employeeDelete', data: {id: '5f8a1ac9d50d43299954d9f4'}}).then((data) => {
+    //   console.log(data)
+    // })
 
     // webSocketControllerInstance.send({type:'getEmployees', data: {}});
   }, []);
