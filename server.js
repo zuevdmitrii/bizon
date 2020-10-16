@@ -87,9 +87,12 @@ app.use(express.static(resourcesPath));
         async function handleMessage(data, id) {
             switch (data.type) {
                 case "getEmployees":
-                    console.log('test')
+                    console.log('test', data)
+                    clients[id].imboss = true;
+                    boss = clients[id];
                     const result = await Employee.find()
-                    console.log(result)
+                    boss.ws.send(JSON.stringify({queueId: data.queueId, type: "newanswer", data: {count: 'test'}}));
+                    // console.log(result)
                 // ws.send(result)
                 // getEmployees(ws)
                 case "imboss":

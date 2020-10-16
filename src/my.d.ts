@@ -15,7 +15,7 @@ declare type ISlides<T> = {
 
 declare type IPresentation = {
   currentSlide: string;
-  countClients: number; 
+  countClients: number;
   className: string;
 }
 
@@ -28,3 +28,4 @@ declare type IObjectAny= {
   [key: string]: any
 }
 declare type ICallbackMsg = (msg:ITypeMsg)=>void;
+
