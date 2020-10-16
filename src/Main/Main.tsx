@@ -5,17 +5,38 @@ import "./Main.less";
 import {TaskDetail} from "./TaskDetail";
 import { Tasks } from "./Tasks";
 import { webSocketControllerInstance }  from '../WebSocketInstance';
-import { Staff } from "./Staff";
 import {PersonDetail} from "./Person/PersonDetail";
+import { Persons } from "./Persons";
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
-
-    webSocketControllerInstance.call({type:'getEmployees', data: {}}).then((data) => {
+    // webSocketControllerInstance.call({type:'employeeCreate', data: {firstName: 'Vladislav2', lastName: 'Bondarenko', role: 'CEO'}}).then((data) => {
+    //   console.log(data)
+    // })
+    webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
       console.log(data)
     })
+
+    //get by ID
+    // webSocketControllerInstance.call({type:'employeeGet', data: {id: '5f8a1497806a3424eaec10db'}}).then((data) => {
+    //   console.log(data)
+    // })
+
+    // update employee
+    // webSocketControllerInstance
+    //   .call({ type: "employeeGet", data: { id: "5f8a1497806a3424eaec10db" } })
+    //   .then((res) => {
+    //     const { data } = res;
+    //     webSocketControllerInstance
+    //       .call({ type: "employeeUpdate", data: {...data, firstName: 'Vladislav'} }).then(res => console.log(res))
+    //   });
+
+    //  webSocketControllerInstance.call({type:'employeeDelete', data: {id: '5f8a1ac9d50d43299954d9f4'}}).then((data) => {
+    //   console.log(data)
+    // })
+
     // webSocketControllerInstance.send({type:'getEmployees', data: {}});
-  }, [])
+  }, []);
 
   return (
     <Router>
@@ -25,6 +46,9 @@ export const Main = (props: HashMap<any>) => {
       <Route path="/tasks" exact component={Tasks} />
       <Route path="/staff" exact component={Staff} />
       <Route path="/employes" exact component={Index} />
+      <Route path="/tasks/" exact component={Tasks} />
+      <Route path="/persons/" exact component={Persons} />
+
     </Router>
   );
 };

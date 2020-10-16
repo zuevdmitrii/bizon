@@ -9,7 +9,7 @@ export const PageTemplate = (props: any) => {
         <Link to={`/`} className="list__row-wrapper">
           Главная
         </Link>
-        <Link to={`/employes/`} className="list__row-wrapper">
+        <Link to={`/persons/`} className="list__row-wrapper">
           Сотрудники
         </Link>
         <Link to={`/tasks/`} className="list__row-wrapper">

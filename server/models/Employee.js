@@ -12,8 +12,7 @@ const EmployeeScheme = new Schema({
   role: String,
   departmentId: {
     type: Schema.Types.ObjectID,
-    ref: 'Department',
-    required: true
+    ref: 'Department'
   }
 })
 
