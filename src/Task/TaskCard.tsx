@@ -4,12 +4,7 @@ import { Input } from "./Input";
 import { useTask } from "./useTask";
 import { Button } from "../Main/Components/Button";
 import { webSocketControllerInstance } from "../WebSocketInstance";
-
-interface ITask {
-  title: string;
-  description: string;
-  assignee: string;
-}
+import {ITask} from "../Main/useTasks";
 
 export const TaskCard = (props: { taskId: string }) => {
   const [localTask, setLocalTask] = useState<ITask | null>(null);
@@ -37,10 +32,10 @@ export const TaskCard = (props: { taskId: string }) => {
             }}
           />
           <Input
-            value={localTask.assignee}
+            value={localTask.assigned}
             label={"Assignee"}
             onChange={(value) => {
-              setLocalTask({ ...localTask, assignee: value });
+              setLocalTask({ ...localTask, assigned: value });
             }}
           />
           <Button
@@ -53,7 +48,7 @@ export const TaskCard = (props: { taskId: string }) => {
                   setDisabled(false);
                 });
             }}
-            caption={"button"}
+            caption={"Обновить"}
           />
         </div>
       ) : (
