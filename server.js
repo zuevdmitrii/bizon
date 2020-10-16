@@ -23,6 +23,10 @@ app.get('/employes/*', (req, res) => {
     res.send(indexFile);
 });
 
+app.get('/tasks/*', (req, res) => {
+    res.send(indexFile);
+});
+
 const clients = {};
 
 app.use(express.static(resourcesPath));
@@ -140,6 +144,8 @@ app.use(express.static(resourcesPath));
                     boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
                     break;
                 default:
+                    boss = clients[id];
+                    boss.ws.send(JSON.stringify({queueId: data.queueId, type: "not found", data: {}}));
                     return "wrong request";
             }
         }
