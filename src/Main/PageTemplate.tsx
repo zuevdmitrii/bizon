@@ -18,6 +18,9 @@ export const PageTemplate = (props: any) => {
         <Link to={`/task/2`} className="list__row-wrapper">
           Задача
         </Link>
+        <Link to={`/person/2`} className="list__row-wrapper">
+          Сотрудник
+        </Link>
       </div>
       <div className="bread">
         <BreadCrumbs />
