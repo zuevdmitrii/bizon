@@ -24,4 +24,7 @@ declare type ITypeMsg = {
   data: any;
 }
 
+declare type IObjectAny= {
+  [key: string]: any
+}
 declare type ICallbackMsg = (msg:ITypeMsg)=>void;
