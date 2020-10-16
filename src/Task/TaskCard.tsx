@@ -50,7 +50,6 @@ export const TaskCard = (props: { taskId: string }) => {
               webSocketControllerInstance
                 .call({ type: "taskUpdate", data: localTask })
                 .then((data) => {
-                  console.log('resp')
                   setDisabled(false);
                 });
             }}
