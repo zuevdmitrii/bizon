@@ -25,6 +25,10 @@ app.get('/tasks/*', (req, res) => {
     res.send(indexFile);
 });
 
+app.get('/persons/*', (req, res) => {
+    res.send(indexFile);
+});
+
 const clients = {};
 
 app.use(express.static(resourcesPath));

@@ -5,7 +5,7 @@ import "./Main.less";
 import {TaskDetail} from "./TaskDetail";
 import { Tasks } from "./Tasks";
 import { webSocketControllerInstance }  from '../WebSocketInstance';
-import { Staff } from "./Staff";
+import { Persons } from "./Persons";
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
@@ -20,9 +20,9 @@ export const Main = (props: HashMap<any>) => {
     <Router>
       <Route path="/" exact component={Index} />
       <Route path="/task/:id" exact component={TaskDetail} />
-      <Route path="/tasks" exact component={Tasks} />
-      <Route path="/staff" exact component={Staff} />
-      <Route path="/employes" exact component={Index} />
+      <Route path="/tasks/" exact component={Tasks} />
+      <Route path="/persons/" exact component={Persons} />
+
     </Router>
   );
 };
