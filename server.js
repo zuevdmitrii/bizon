@@ -1,5 +1,7 @@
-// const getEmployees = require('./src/handlers/getEmployees')
-const Employee = require("./server/models/Employee")
+const getEmployees = require('./server/handlers/employees/getEmployees')
+const createEmployee = require('./server/handlers/employees/createEmployee')
+const updateEmployee = require('./server/handlers/employees/updateEmployee')
+const deleteEmployee = require('./server/handlers/employees/deleteEmployee')
 const mongoose = require("mongoose");
 const root = process.cwd(),
       path = require('path'),
@@ -18,6 +20,14 @@ app.get('/task/*', (req, res) => {
 });
 
 app.get('/employes/*', (req, res) => {
+    res.send(indexFile);
+});
+
+app.get('/tasks/*', (req, res) => {
+    res.send(indexFile);
+});
+
+app.get('/persons/*', (req, res) => {
     res.send(indexFile);
 });
 
@@ -82,15 +92,18 @@ app.use(express.static(resourcesPath));
 
         async function handleMessage(data, id) {
             switch (data.type) {
-                case "getEmployees":
-                    console.log('test', data)
-                    clients[id].imboss = true;
-                    boss = clients[id];
-                    const result = await Employee.find()
-                    boss.ws.send(JSON.stringify({queueId: data.queueId, type: "newanswer", data: {count: 'test'}}));
-                    // console.log(result)
-                // ws.send(result)
-                // getEmployees(ws)
+                case "employeeGet":
+                    getEmployees(clients, id, data)
+                    break;
+                case "employeeCreate":
+                    createEmployee(clients, id, data)
+                    break
+                case 'employeeUpdate':
+                    updateEmployee(clients, id, data)
+                    break
+                case 'employeeDelete':
+                    deleteEmployee(clients, id, data)
+                    break
                 case "imboss":
                     clients[id].imboss = true;
                     boss = clients[id];
@@ -135,6 +148,8 @@ app.use(express.static(resourcesPath));
                     boss.ws.send(JSON.stringify({type: "newanswer", data: {count: activeAnswer}}));
                     break;
                 default:
+                    boss = clients[id];
+                    boss.ws.send(JSON.stringify({queueId: data.queueId, type: "not found", data: {}}));
                     return "wrong request";
             }
         }
