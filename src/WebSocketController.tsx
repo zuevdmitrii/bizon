@@ -13,8 +13,9 @@ export class WebSocketController {
   private socketConnected: boolean = false;
   private queue: Array<ITypeMsg> = [];
 
-  constructor() {
-    this.socket = new WebSocket(location.origin.replace(/^http/, "ws"));
+  constructor(address?: string) {
+    const socketAddress = address || location.origin.replace(/^http/, "ws")
+    this.socket = new WebSocket(socketAddress);
     this.socket.onopen = () => {
       console.log("Соединение установлено.");
       this.socketConnected = true;
@@ -58,6 +59,14 @@ export class WebSocketController {
   send(msg: ITypeMsg) {
     if (this.socketConnected) {
       this.socket.send(JSON.stringify(msg));
+    } else {
+      this.queue.push(msg);
+    }
+  }
+  
+  sendRaw(msg: any) {
+    if(this.socketConnected) {
+      this.socket.send(JSON.stringify(msg))   
     } else {
       this.queue.push(msg);
     }
