@@ -43,8 +43,6 @@ export const Main = (props: HashMap<any>) => {
       <Route path="/" exact component={Index} />
       <Route path="/task/:id" exact component={TaskDetail} />
       <Route path="/person/:id" exact component={PersonDetail}/>
-      <Route path="/tasks" exact component={Tasks} />
-      <Route path="/staff" exact component={Staff} />
       <Route path="/employes" exact component={Index} />
       <Route path="/tasks/" exact component={Tasks} />
       <Route path="/persons/" exact component={Persons} />
