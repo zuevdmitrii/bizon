@@ -16,9 +16,11 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.6",
     "express": "^4.16.4",
     "react": "16.8.4",
     "react-dom": "^16.8.4",
+    "react-router-dom": "^5.2.0",
     "requirejs": "2.1.18",
     "serve-static": "1.11.x",
     "ws": "6.2.0"
@@ -32,7 +34,7 @@
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.5.0",
     "source-map-loader": "0.2.4",
-    "typescript": "next",
+    "typescript": "^4.1.0-dev.20201016",
     "webpack": "4.29.6",
     "webpack-cli": "^3.2.3"
   }
