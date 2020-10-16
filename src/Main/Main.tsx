@@ -5,6 +5,7 @@ import "./Main.less";
 import {TaskDetail} from "./TaskDetail";
 import { Tasks } from "./Tasks";
 import { webSocketControllerInstance }  from '../WebSocketInstance';
+import {PersonDetail} from "./Person/PersonDetail";
 import { Persons } from "./Persons";
 
 export const Main = (props: HashMap<any>) => {
@@ -41,6 +42,10 @@ export const Main = (props: HashMap<any>) => {
     <Router>
       <Route path="/" exact component={Index} />
       <Route path="/task/:id" exact component={TaskDetail} />
+      <Route path="/person/:id" exact component={PersonDetail}/>
+      <Route path="/tasks" exact component={Tasks} />
+      <Route path="/staff" exact component={Staff} />
+      <Route path="/employes" exact component={Index} />
       <Route path="/tasks/" exact component={Tasks} />
       <Route path="/persons/" exact component={Persons} />
 
