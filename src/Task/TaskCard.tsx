@@ -9,9 +9,8 @@ interface ITask {
   assignee: string;
 }
 
-export const TaskCard = (props: { taskId: string; match: any }) => {
-  const task = useTask(props.match.params.id);
-  console.log('task', task)
+export const TaskCard = (props: { taskId: string}) => {
+  const task = useTask(props.taskId);
   return (
     <div>
       {task ? (

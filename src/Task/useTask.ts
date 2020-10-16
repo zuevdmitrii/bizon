@@ -10,16 +10,14 @@ export const useTask = (taskId: string) => {
   const [task, setTask] = useState<ITask | null>(null);
 
   React.useEffect(() => {
-    console.log('useTask')
     const timeout = setTimeout(() => {
       //taskId
-      console.log('set task')
       setTask({
         title: "test title",
         description: "test description",
         assignee: "test assignee",
       });
-    }, 5000);
+    }, 2000);
     return () => clearTimeout(timeout)
   }, []);
 
