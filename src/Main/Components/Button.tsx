@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./Button.less"
 
 interface IButtonProps {
   onClick: () => void;
@@ -7,7 +8,7 @@ interface IButtonProps {
 }
 export const Button = (props: IButtonProps) => {
   return (
-    <button disabled={props.disabled} onClick={props.onClick}>
+    <button className='button' disabled={props.disabled} onClick={props.onClick}>
       {props.caption}
     </button>
   );

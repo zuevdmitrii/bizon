@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Input } from "../../Task/Input";
 import { Button } from "../Components/Button";
+import "./Auth.less";
 
 interface IProps {
   onAuth: (login: string, password: string) => Promise<boolean>;
@@ -12,7 +13,7 @@ export const Auth = (props: IProps) => {
     pass: "",
   });
   return (
-    <div>
+    <div className='auth'>
       <Input
         value={cred.login}
         label={"Email"}
