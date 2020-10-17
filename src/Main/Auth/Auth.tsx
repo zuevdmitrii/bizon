@@ -29,7 +29,7 @@ export const Auth = (props: IProps) => {
         }}
       />
       <Button
-        caption="Открыть модалку"
+        caption="Войти"
         onClick={async () => {
           await props.onAuth(cred.login, cred.pass);
         }}
