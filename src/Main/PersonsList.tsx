@@ -5,7 +5,7 @@ import { employeeDelete } from "../api/EmployeeApi";
 import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
 import { Input } from "../Task/Input";
 import { Button } from "./Components/Button";
-import "./Main.less";
+import "./PersonsList.less";
 import { usePersons } from "./usePersons";
 
 export const PersonsList = (props: {setUser?: (email: string, id: string) => void, onClose?: () => void}) => {
@@ -14,7 +14,7 @@ export const PersonsList = (props: {setUser?: (email: string, id: string) => voi
   const persons = usePersons(filters, {}, {});
  
   return (
-    <div>
+    <div className="listRoot">
       <Link to={`/person/new`} className="list__row-wrapper">
         Создать нового сотрудника
       </Link>
