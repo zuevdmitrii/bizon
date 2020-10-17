@@ -10,11 +10,11 @@ export const Header = (props: any) => {
             <Link to={`/`} className="list__row-wrapper">
                 <img src='/resources/logo.jpg' />
             </Link>
-            <Link to={`/persons/`} className="header__menu">
-                Сотрудники
-            </Link>
             <Link to={`/tasks/`} className="header__menu">
                 Задачи
+            </Link>
+            <Link to={`/persons/`} className="header__menu">
+                Сотрудники
             </Link>
         </div>
     );
