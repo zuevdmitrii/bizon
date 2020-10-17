@@ -15,6 +15,7 @@ export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
     const testFetch = async () => {
       // const { data } = await taskGetByDepartment("hewlett packard");
+      // const { data } = await taskGetByDepartment("apple");
       // console.log(data)
 
       // const res = await taskCreate();
