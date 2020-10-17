@@ -3,13 +3,15 @@ import { IDataProviderFilter }         from './IFilter';
 
 export const taskCreate = (
   data = {
-    title: "Third Task",
+    title: "Last",
     description: "simple",
     assignee: "5f8a7fe0b7fd6214507fef3c",
     status: "Review",
     creationDate: new Date(),
     targetDate: new Date(),
-  }
+    tags: ["one", "two"],
+    blockTask: '5f8aa8cc8cf264325dc34edf'
+  } as any
 ) => {
   return webSocketControllerInstance.call({
     type: "taskCreate",
