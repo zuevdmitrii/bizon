@@ -1,0 +1,122 @@
+@import 'src/theme';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  padding: var(--modal-paper__padding-sm);
+  background-color: var(--modal-paper__overlay-bg);
+
+  @include media-min($modal-paper__breakpoint-first) {
+    padding: var(--modal-paper__padding-md);
+  }
+
+  @include media-min($modal-paper__breakpoint-second) {
+    padding: var(--modal-paper__padding-lg);
+  }
+}
+
+.window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  background-color: var(--modal-paper__window-bg);
+  box-shadow: var(--modal-paper__window-shadow);
+
+  &_auto {
+    width: auto;
+    max-width: none;
+  }
+
+  &_xs {
+    max-width: var(--modal-paper__size-xs);
+  }
+
+  &_sm {
+    max-width: var(--modal-paper__size-sm);
+  }
+
+  &_md {
+    max-width: var(--modal-paper__size-md);
+  }
+
+  &_lg {
+    max-width: var(--modal-paper__size-lg);
+  }
+
+  &_xl {
+    max-width: var(--modal-paper__size-xl);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-shrink: 0;
+}
+
+.close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  color: inherit;
+  font-size: 30px;
+  background-color: transparent;
+  border-radius: 0;
+  transition: background-color var(--transition-controls), opacity var(--transition-controls);
+
+  &:focus,
+  &:hover {
+    color: inherit;
+    background-color: rgba(var(--color-base--rgb), 0.1);
+    border-color: transparent;
+  }
+
+  &:active {
+    color: inherit;
+    background-color: rgba(var(--color-base--rgb), 0.2);
+    border-color: transparent;
+  }
+
+  @include media-min($modal-paper__breakpoint-second) {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    color: $color-white;
+
+    &:focus,
+    &:hover {
+      color: $color-white;
+      background-color: transparent;
+      opacity: 0.8;
+    }
+
+    &:active {
+      color: $color-white;
+      background-color: transparent;
+      opacity: 0.6;
+    }
+  }
+}
+
+.children {
+  flex: 1 1 auto;
+  padding: var(--modal-paper__padding-sm);
+  overflow-y: auto;
+
+  @include media-min($modal-paper__breakpoint-first) {
+    padding: var(--modal-paper__padding-md);
+  }
+}
