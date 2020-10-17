@@ -14,6 +14,11 @@ const TaskScheme = new Schema({
   status: String,
   creationDate: Date,
   targetDate: Date,
+  tags: [String],
+  blockTask: {
+    type: Schema.Types.ObjectID,
+    ref: 'Task'
+  }
 });
 
 module.exports = model("Task", TaskScheme, "tasks");

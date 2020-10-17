@@ -6,79 +6,36 @@ import { TaskDetail } from "./TaskDetail";
 import { Tasks } from "./Tasks";
 import { PersonDetail } from "./Person/PersonDetail";
 import { Persons } from "./Persons";
-import { Logic, Operator } from "../api/IFilter";
-import { employeeGet } from "../api/EmployeeApi";
-import { departmentGet }                      from "../api/DepartmentApi";
-import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
+import { Auth } from "./Auth/Auth";
+import { login } from "../api/LoginApi";
 
 export const Main = (props: HashMap<any>) => {
-  React.useEffect(() => {
-    const testFetch = async () => {
-      // // const { data } = await taskGetByDepartment("hewlett packard");
-      // const { data } = await taskGetByDepartment("apple",
-      // //   {
-      // //   logic: Logic.and,
-      // //   filters: [
-      // //     { field: "assignee.email", value: "mail", operator: Operator.contains },
-      // //   ],
-      // // }
-      // );
-      //
-      // const { data } = await taskGetByUser("5f8a7fe0b7fd6214507fef3c",
-      //     {
-      //     logic: Logic.and,
-      //     filters: [
-      //       { field: "description", value: "1", operator: Operator.eq },
-      //     ],
-      //   }
-      // );
-      // console.log(data)
-
-      // const res = await taskCreate();
-
-      // const { data } = await taskGet(undefined, {
-      //   logic: Logic.or,
-      //   filters: [
-      //     { field: "description", value: "s", operator: Operator.contains },
-      //     { field: "status", value: "To Do", operator: Operator.eq },
-      //     { field: "title", value: "1", operator: Operator.eq },
-      //   ],
-      // });
-
-      // const {data} = await departmentGet()
-      // console.log(data)
-
-      // const  {data}  = await employeeGet(undefined, undefined, {
-      //   logic: Logic.and,
-      //   filters: [
-      //     {field: "password", value: "123", operator: Operator.eq},
-      //     {field: 'firstName', value: 'Эл', operator: Operator.contains}
-      //   ]
-      // })
-
-      // console.log(data);
-      // const res = await taskUpdate({...data, title: 'Tetst modify'})
-      // const res = await taskDelete("5f8aad193cba44338d819887")
-      // const res = await employeeCreate()
-      // const { data } = await employeeGet(undefined, 'bondarencko40@gmail.com')
-      // console.log(data)
-      // const [empl] = data
-      // const res = await employeeUpdate({...empl, firstName: 'del me'})
-      // const res = await employeeDelete('5f8ab08908b3ef34962e0e7d')
-      // console.log(res);
-      // await login('qwetyel@gmail.com', '123')
-    };
-    testFetch();
-  }, []);
-
+  const [logged, setLogged] = React.useState<boolean>(
+    !!localStorage.getItem("token")
+  );
+  
   return (
-    <Router>
-      <Route path="/" exact component={Index} />
-      <Route path="/task/:id" exact component={TaskDetail} />
-      <Route path="/person/:id" exact component={PersonDetail} />
-      <Route path="/employes" exact component={Index} />
-      <Route path="/tasks/" exact component={Tasks} />
-      <Route path="/persons/" exact component={Persons} />
-    </Router>
+    <>
+      {logged ? (
+        <>
+          <Router>
+            <Route path="/" exact component={Index} />
+            <Route path="/task/:id" exact component={TaskDetail} />
+            <Route path="/person/:id" exact component={PersonDetail} />
+            <Route path="/employes" exact component={Index} />
+            <Route path="/tasks/" exact component={Tasks} />
+            <Route path="/persons/" exact component={Persons} />
+          </Router>
+        </>
+      ) : (
+        <Auth
+          onAuth={async (name, pass) => {
+            await login(name, pass);
+            setLogged(true);
+            return true;
+          }}
+        />
+      )}
+    </>
   );
 };

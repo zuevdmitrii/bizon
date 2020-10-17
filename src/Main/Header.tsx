@@ -1,25 +1,26 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
+import { Exit } from "./Exit";
+import "./Header.less"
 
 export const Header = (props: any) => {
     const [modal, setModal] = React.useState(false)
     return (
         <div className={'Bizon__header'}>
+
             <Link to={`/`} className="list__row-wrapper">
-                Главная
+                <img src='/resources/logo.jpg' />
             </Link>
-            <Link to={`/persons/`} className="list__row-wrapper">
-                Сотрудники
-            </Link>
-            <Link to={`/tasks/`} className="list__row-wrapper">
+            <Link to={`/tasks/`} className="header__menu">
                 Задачи
             </Link>
-            <Link to={`/task/2`} className="list__row-wrapper">
-                Задача
+            <Link to={`/persons/`} className="header__menu">
+                Сотрудники
             </Link>
-            <Link to={`/person/2`} className="list__row-wrapper">
-                Сотрудник
-            </Link>
+
+            <Exit logout={() => {
+                window.location.reload()
+            }}/>
         </div>
     );
 };

@@ -14,6 +14,11 @@ const getDepartments = require('./server/handlers/departments/getDepartments')
 const getTasksByDepartment = require('./server/handlers/tasks/getTasksByDepartment')
 const getTasksByUser = require('./server/handlers/tasks/getTasksByUser')
 
+const getHistory = require('./server/handlers/history/getHistory')
+const createHistory = require('./server/handlers/history/createHistory')
+const updateHistory = require('./server/handlers/history/updateHistory')
+const deleteHistory = require('./server/handlers/history/deleteHistory')
+
 const mongoose = require("mongoose");
 const root = process.cwd(),
       path = require('path'),
@@ -107,6 +112,18 @@ app.use(express.static(resourcesPath));
 
         async function handleMessage(data, id) {
             switch (data.type) {
+                case "historyGet":
+                    getHistory(clients, id, data)
+                    break
+                case "historyCreate":
+                    createHistory(clients, id, data)
+                    break
+                case "historyUpdate":
+                    updateHistory(clients, id, data)
+                    break
+                case "historyDelete":
+                    deleteHistory(clients, id, data)
+                    break
                 case "taskGetByUser":
                     getTasksByUser(clients, id, data)
                     break;

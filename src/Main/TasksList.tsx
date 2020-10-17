@@ -11,7 +11,11 @@ import { DepartmentsModal } from "./DepartmentsModal";
 import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
 import { PersonsList } from "./PersonsList";
 
-export const TasksList = () => {
+interface ITasksListProps {
+  setTask?: (title: string, id: string) => void
+}
+
+export const TasksList = (props: ITasksListProps) => {
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const { tasks, setTasks } = useTasks(filters, {}, {});
@@ -94,7 +98,14 @@ export const TasksList = () => {
                 </Link>
                 <div className={"listTitle"} key={index}>
                   {task.title}
+                  {props.setTask && <Button 
+                    caption="Выбрать"
+                    onClick={() => {
+                      props.setTask(task.title, task._id)
+                    }}
+                  />}
                 </div>
+
               </div>
             );
           })}
