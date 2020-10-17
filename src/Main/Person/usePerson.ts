@@ -10,7 +10,7 @@ interface IPerson {
   role: string;
 }
 
-export const usePerson = (personId: string) => {
+export const usePerson = (personId: string, update?: number) => {
   const [person, setPerson] = useState<IPerson | null>(null);
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ export const usePerson = (personId: string) => {
     } else {
       setPerson({} as IPerson);
     }
-  }, []);
+  }, [update]);
 
   return person;
 };
