@@ -11,6 +11,7 @@ import { Modal } from "../Main/Components/Modal";
 import { PersonsList } from "../Main/PersonsList";
 import { TasksList } from "../Main/TasksList";
 import { Link } from "react-router-dom";
+import { TextArea } from "./TextArea";
 
 const fieldsToFill = ["title", "description"];
 
@@ -81,7 +82,7 @@ export const TaskCard = (props: { taskId: string }) => {
               setLocalTask({ ...localTask, title: value });
             }}
           />
-          <Input
+          <TextArea
             value={localTask.description}
             label={"Description"}
             onChange={(value) => {
