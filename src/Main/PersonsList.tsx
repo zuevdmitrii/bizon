@@ -8,7 +8,7 @@ import { Button } from "./Components/Button";
 import "./Main.less";
 import { usePersons } from "./usePersons";
 
-export const PersonsList = () => {
+export const PersonsList = (props: {setUser?: (email: string, id: string) => void, onClose?: () => void}) => {
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const persons = usePersons(filters, {}, {});
@@ -67,6 +67,10 @@ export const PersonsList = () => {
                   employeeDelete(person._id);
                 }}
               />
+                {props.setUser && <Button onClick={() => {
+                    props.setUser(person.email, person._id)
+                    props.onClose()
+                }} caption={'Выбрать'}/>}
             </div>
           );
         })

@@ -1,18 +1,28 @@
-import * as React                         from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Index }                          from './Index';
-import './Main.less';
-import { TaskDetail }                     from './TaskDetail';
-import { Tasks }                          from './Tasks';
-import { PersonDetail }                   from './Person/PersonDetail';
-import { Persons }                        from './Persons';
-import { Logic, Operator }                from '../api/IFilter';
-import { employeeGet }                    from '../api/EmployeeApi';
-import { departmentGet }                  from '../api/DepartmentApi';
+import * as React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Index } from "./Index";
+import "./Main.less";
+import { TaskDetail } from "./TaskDetail";
+import { Tasks } from "./Tasks";
+import { PersonDetail } from "./Person/PersonDetail";
+import { Persons } from "./Persons";
+import { Logic, Operator } from "../api/IFilter";
+import { employeeGet } from "../api/EmployeeApi";
+import { departmentGet } from "../api/DepartmentApi";
+import { taskGetByDepartment } from "../api/TaskApi";
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
     const testFetch = async () => {
+      // const { data } = await taskGetByDepartment("hewlett packard");
+      // const { data } = await taskGetByDepartment("samsung", {
+      //   logic: Logic.and,
+      //   filters: [
+      //     { field: "description", value: "s", operator: Operator.contains },
+      //   ],
+      // });
+      // console.log(data)
+
       // const res = await taskCreate();
 
       // const { data } = await taskGet(undefined, {
