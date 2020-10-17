@@ -5,7 +5,7 @@ import { useTask } from "./useTask";
 import { Button } from "../Main/Components/Button";
 import { ITask } from "../Main/useTasks";
 import { Clipboard } from "../Main/Clipboard/Clipboard";
-import { taskCreate, taskUpdate } from "../api/TaskApi";
+import { taskCreate, taskGet, taskUpdate } from "../api/TaskApi";
 import { usePerson } from "../Main/Person/usePerson";
 import { Modal } from "../Main/Components/Modal";
 import { PersonsList } from "../Main/PersonsList";
@@ -26,6 +26,7 @@ export const TaskCard = (props: { taskId: string }) => {
   const [blockTaskWindow, setBlockTaskWindow] = useState(false);
   const [blockTask, setBlockTask] = useState("");
   const [update, setUpdate] = useState(0);
+  const [newTag, setNewTag] = useState("");
   const task = useTask(props.taskId);
   const person = usePerson(personId, update);
   useEffect(() => {
@@ -38,7 +39,15 @@ export const TaskCard = (props: { taskId: string }) => {
       setLocalTask({} as ITask);
     }
   }, [task]);
-
+  useEffect(() => {
+    if (task) {
+      taskGet(task.blockTask).then((taskBlocked) => {
+        if (taskBlocked) {
+          setBlockTask(taskBlocked.data.title);
+        }
+      });
+    }
+  }, [task]);
   useEffect(() => {
     if (helperState === fieldsToFill.length) {
       setHelperConnect(false);
@@ -91,7 +100,9 @@ export const TaskCard = (props: { taskId: string }) => {
           />
           <div key={props.taskId}>
             Блокирующая задача:
-            {blockTask && <Link to={`/task/${localTask.blockTask}`}>{blockTask}</Link>}
+            {blockTask && (
+              <Link to={`/task/${localTask.blockTask}`}>{blockTask}</Link>
+            )}
             <Button
               onClick={() => setBlockTaskWindow(true)}
               caption={"Выбрать задачу"}
@@ -122,7 +133,7 @@ export const TaskCard = (props: { taskId: string }) => {
                 setTask={(title, id) => {
                   setBlockTask(title);
                   setLocalTask({ ...localTask, blockTask: id });
-                  setBlockTaskWindow(false)
+                  setBlockTaskWindow(false);
                 }}
               />
             </Modal>
@@ -132,6 +143,30 @@ export const TaskCard = (props: { taskId: string }) => {
             label={"Status"}
             onChange={(value) => setLocalTask({ ...localTask, status: value })}
           />
+          {localTask.tags &&
+            localTask.tags.map((tag: string, index: number) => (
+              <>{index > 0 ? `, ${tag}` : tag}</>
+            ))}
+          <div
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                if (localTask.tags) {
+                  localTask.tags.push(newTag);
+                }
+                setNewTag("");
+                setLocalTask({
+                  ...localTask,
+                  tags: localTask.tags ? localTask.tags : [newTag],
+                });
+              }
+            }}
+          >
+            <Input
+              value={newTag}
+              onChange={(value) => setNewTag(value)}
+              label={"Новый тег"}
+            />
+          </div>
           <Button
             disabled={disabled}
             onClick={() => {
@@ -140,8 +175,8 @@ export const TaskCard = (props: { taskId: string }) => {
                 localTask.targetDate = new Date();
                 localTask.creationDate = new Date();
                 taskCreate(localTask).then(() => {
-                  window.history.back()
-                  setDisabled(false)
+                  window.history.back();
+                  setDisabled(false);
                 });
               } else if (localTask) {
                 taskUpdate(localTask).then(() => setDisabled(false));

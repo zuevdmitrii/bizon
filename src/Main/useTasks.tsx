@@ -12,6 +12,7 @@ export interface ITask {
   creationDate: Date;
   targetDate: Date;
   blockTask: string;
+  tags?: string[];
 }
 
 export const useTasks = (
