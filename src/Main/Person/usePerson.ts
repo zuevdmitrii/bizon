@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { webSocketControllerInstance } from "../../WebSocketInstance";
+import { employeeGet } from "../../api/EmployeeApi";
 
 interface IPerson {
   _id: string;
@@ -15,12 +15,11 @@ export const usePerson = (personId: string) => {
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      if (personId !=='-1'){webSocketControllerInstance
-        .call({ type: "employeeGet", data: { id: personId } })
-        .then((res) => {
-          console.log(res);
+      if (personId !=='new'){
+       employeeGet(personId).then((res) => {
           res && res.data && setPerson(res.data);
-        });} else {
+        })
+      } else {
             setPerson({} as IPerson)
         }
     }, 2000);

@@ -8,6 +8,8 @@ const createTask = require('./server/handlers/tasks/createTask')
 const updateTask = require('./server/handlers/tasks/updateTask')
 const deleteTask = require('./server/handlers/tasks/deleteTask')
 
+const login = require('./server/handlers/login/login')
+
 const mongoose = require("mongoose");
 const root = process.cwd(),
       path = require('path'),
@@ -101,6 +103,9 @@ app.use(express.static(resourcesPath));
 
         async function handleMessage(data, id) {
             switch (data.type) {
+                case "login":
+                    login(clients, id, data)
+                    break
                 case "employeeGet":
                     getEmployees(clients, id, data)
                     break;
