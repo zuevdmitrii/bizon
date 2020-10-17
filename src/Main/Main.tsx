@@ -10,6 +10,7 @@ import { Auth }                           from "./Auth/Auth";
 import { login }                          from "../api/LoginApi";
 import { useEffect }                      from 'react';
 import { employeeGet }                    from '../api/EmployeeApi';
+import { Statistics }                     from './Statistics';
 
 export const Main = (props: HashMap<any>) => {
 //   useEffect(() => {
@@ -35,6 +36,7 @@ export const Main = (props: HashMap<any>) => {
             <Route path="/employes" exact component={Index} />
             <Route path="/tasks/" exact component={Tasks} />
             <Route path="/persons/" exact component={Persons} />
+            <Route path="/statistics/" exact component={Statistics}/>
           </Router>
         </>
       ) : (
