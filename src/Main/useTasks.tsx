@@ -1,22 +1,30 @@
-import * as React from 'react'
+import * as React from "react";
+import {taskGet} from "../api/TaskApi";
 
 export interface ITask {
-    _id: string
+  _id: string;
   title: string;
   description: string;
-  assigned: string;
+  assignee: string;
+  status: string;
+  creationDate: Date;
+  targetDate: Date;
 }
 
-export const useTasks = (filters: IObjectAny, sorting: IObjectAny, paging: IObjectAny)=>{
-    const [tasks, setTasks] = React.useState<ITask[]| null>(null);
+export const useTasks = (
+  filters: IObjectAny,
+  sorting: IObjectAny,
+  paging: IObjectAny
+) => {
+  const [tasks, setTasks] = React.useState<ITask[] | null>(null);
+  const fetchTasks = async () => {
+    const tasksData = await taskGet()
+    if (tasksData) {
+      setTasks(tasksData.data)
+    }
+  }
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      setTasks([
-        { _id: 'one',title: "task1", description: "q" } as ITask,
-        { _id: 'two',title: "task2" } as ITask,
-      ]);
-    }, 1000);
-    return () => clearTimeout(timeout);
+    fetchTasks()
   }, []);
-  return tasks
-}
+  return tasks;
+};

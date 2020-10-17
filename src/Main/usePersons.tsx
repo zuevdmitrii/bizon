@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { webSocketControllerInstance } from '../WebSocketInstance';
+import { employeeGet } from '../api/EmployeeApi';
+
 
 export interface IPerson {
     _id: string
@@ -10,16 +11,15 @@ export interface IPerson {
 }
 
 export const usePersons = (filters: IObjectAny, sorting: IObjectAny, paging: IObjectAny)=>{
-    const [tasks, setTasks] = React.useState<IPerson[]| null>(null);
+    const [persons, setPersons] = React.useState<IPerson[]| null>(null);
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((response) => {
-      console.log(response)
-      response && response.data && setTasks(response['data'])
-    })
+      employeeGet().then((res) => {
+          res && res.data && setPersons(res.data);
+        })
       ;
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
-  return tasks
+  return persons
 }

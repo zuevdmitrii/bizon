@@ -1,17 +1,17 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Input } from "../Task/Input";
-import { webSocketControllerInstance } from "../WebSocketInstance";
+import { employeeDelete } from "../api/EmployeeApi";
 import { Button } from "./Components/Button";
 import "./Main.less";
-import { IPerson, usePersons } from "./usePersons";
+import { usePersons } from "./usePersons";
 
 export const PersonsList = () => {
   const persons = usePersons({}, {}, {});
 
   return (
     <div>
-      <Link to={`/person/-1`} className="list__row-wrapper">
+
+      <Link to={`/person/new`} className="list__row-wrapper">
         Создать нового сотрудника
       </Link>
 
@@ -28,14 +28,7 @@ export const PersonsList = () => {
               <Button
                 caption={"X"}
                 onClick={() => {
-                  webSocketControllerInstance
-                    .call({
-                      type: "employeeDelete",
-                      data: { id: person._id },
-                    })
-                    .then((data) => {
-                      console.log(data);
-                    });
+                  employeeDelete(person._id)
                 }}
               />
             </div>

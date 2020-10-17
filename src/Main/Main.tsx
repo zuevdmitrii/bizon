@@ -1,52 +1,59 @@
-import * as React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Index } from "./Index";
-import "./Main.less";
-import {TaskDetail} from "./TaskDetail";
-import { Tasks } from "./Tasks";
-import { webSocketControllerInstance }  from '../WebSocketInstance';
-import {PersonDetail} from "./Person/PersonDetail";
-import { Persons } from "./Persons";
+import * as React                         from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Index }                          from './Index';
+import './Main.less';
+import { TaskDetail }                     from './TaskDetail';
+import { Tasks }                          from './Tasks';
+import { PersonDetail }                   from './Person/PersonDetail';
+import { Persons }                        from './Persons';
+import { Logic, Operator }                from '../api/IFilter';
+import { employeeGet }                    from '../api/EmployeeApi';
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
-    // webSocketControllerInstance.call({type:'employeeCreate', data: {firstName: 'Vladislav2', lastName: 'Bondarenko', role: 'CEO', email: 'bondarencko40@gmail.com'}}).then((data) => {
-    //   console.log(data)
-    // })
-    // webSocketControllerInstance.call({type:'employeeGet', data: {}}).then((data) => {
-    //   console.log(data)
-    // })
+    const testFetch = async () => {
+      // const res = await taskCreate();
 
-    //get by ID
-    // webSocketControllerInstance.call({type:'employeeGet', data: {id: '5f8a1497806a3424eaec10db'}}).then((data) => {
-    //   console.log(data)
-    // })
+      // const { data } = await taskGet(undefined, {
+      //   logic: Logic.or,
+      //   filters: [
+      //     { field: "description", value: "s", operator: Operator.contains },
+      //     { field: "status", value: "To Do", operator: Operator.eq },
+      //     { field: "title", value: "1", operator: Operator.eq },
+      //   ],
+      // });
 
-    // update employee
-    // webSocketControllerInstance
-    //   .call({ type: "employeeGet", data: { id: "5f8a1497806a3424eaec10db" } })
-    //   .then((res) => {
-    //     const { data } = res;
-    //     webSocketControllerInstance
-    //       .call({ type: "employeeUpdate", data: {...data, firstName: 'Vladislav'} }).then(res => console.log(res))
-    //   });
+      const  {data}  = await employeeGet(undefined, undefined, {
+        logic: Logic.and,
+        filters: [
+          {field: "password", value: "123", operator: Operator.eq},
+          {field: 'firstName', value: 'Эл', operator: Operator.contains}
+        ]
+      })
 
-    //  webSocketControllerInstance.call({type:'employeeDelete', data: {id: '5f8a1ac9d50d43299954d9f4'}}).then((data) => {
-    //   console.log(data)
-    // })
-
-    // webSocketControllerInstance.send({type:'getEmployees', data: {}});
+      console.log(data);
+      // const res = await taskUpdate({...data, title: 'Tetst modify'})
+      // const res = await taskDelete("5f8aad193cba44338d819887")
+      // const res = await employeeCreate()
+      // const { data } = await employeeGet(undefined, 'bondarencko40@gmail.com')
+      // console.log(data)
+      // const [empl] = data
+      // const res = await employeeUpdate({...empl, firstName: 'del me'})
+      // const res = await employeeDelete('5f8ab08908b3ef34962e0e7d')
+      // console.log(res);
+      // await login('qwetyel@gmail.com', '123')
+    };
+    testFetch();
   }, []);
 
   return (
     <Router>
       <Route path="/" exact component={Index} />
       <Route path="/task/:id" exact component={TaskDetail} />
-      <Route path="/person/:id" exact component={PersonDetail}/>
+      <Route path="/person/:id" exact component={PersonDetail} />
       <Route path="/employes" exact component={Index} />
       <Route path="/tasks/" exact component={Tasks} />
       <Route path="/persons/" exact component={Persons} />
-
     </Router>
   );
 };

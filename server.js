@@ -2,6 +2,14 @@ const getEmployees = require('./server/handlers/employees/getEmployees')
 const createEmployee = require('./server/handlers/employees/createEmployee')
 const updateEmployee = require('./server/handlers/employees/updateEmployee')
 const deleteEmployee = require('./server/handlers/employees/deleteEmployee')
+
+const getTasks = require('./server/handlers/tasks/getTasks')
+const createTask = require('./server/handlers/tasks/createTask')
+const updateTask = require('./server/handlers/tasks/updateTask')
+const deleteTask = require('./server/handlers/tasks/deleteTask')
+
+const login = require('./server/handlers/login/login')
+
 const mongoose = require("mongoose");
 const root = process.cwd(),
       path = require('path'),
@@ -95,6 +103,9 @@ app.use(express.static(resourcesPath));
 
         async function handleMessage(data, id) {
             switch (data.type) {
+                case "login":
+                    login(clients, id, data)
+                    break
                 case "employeeGet":
                     getEmployees(clients, id, data)
                     break;
@@ -106,6 +117,18 @@ app.use(express.static(resourcesPath));
                     break
                 case 'employeeDelete':
                     deleteEmployee(clients, id, data)
+                    break
+                case "taskGet":
+                    getTasks(clients, id, data)
+                    break
+                case "taskCreate":
+                    createTask(clients, id, data)
+                    break
+                case "taskUpdate":
+                    updateTask(clients, id, data)
+                    break
+                case "taskDelete":
+                    deleteTask(clients, id, data)
                     break
                 case "imboss":
                     clients[id].imboss = true;
