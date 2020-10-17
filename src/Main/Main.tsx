@@ -1,14 +1,15 @@
-import * as React                                      from "react";
-import { BrowserRouter as Router, Route }              from "react-router-dom";
-import { Index }                                       from "./Index";
+import * as React                                                      from "react";
+import { BrowserRouter as Router, Route }                              from "react-router-dom";
+import { Index }                                                       from "./Index";
 import "./Main.less";
-import { TaskDetail }                                  from "./TaskDetail";
-import { Tasks }                                       from "./Tasks";
-import { webSocketControllerInstance }                 from "../WebSocketInstance";
-import { PersonDetail }                                from "./Person/PersonDetail";
-import { Persons }                                     from "./Persons";
+import { TaskDetail }                                                  from "./TaskDetail";
+import { Tasks }                                                       from "./Tasks";
+import { webSocketControllerInstance }                                 from "../WebSocketInstance";
+import { PersonDetail }                                                from "./Person/PersonDetail";
+import { Persons }                                                     from "./Persons";
 import { taskCreate, taskGet, taskUpdate, taskDelete }                 from "../api/TaskApi";
 import { employeeCreate, employeeGet, employeeUpdate, employeeDelete } from '../api/EmployeeApi';
+import { login }                                                       from '../api/LoginApi';
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
@@ -24,6 +25,7 @@ export const Main = (props: HashMap<any>) => {
       // const res = await employeeUpdate({...empl, firstName: 'del me'})
       // const res = await employeeDelete('5f8ab08908b3ef34962e0e7d')
       // console.log(res);
+      await login('qwetyel@gmail.com', '123')
     };
     testFetch();
   }, []);
