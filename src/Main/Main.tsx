@@ -22,6 +22,10 @@ export const Main = (props: HashMap<any>) => {
     //   console.log(data)
     // })
 
+    webSocketControllerInstance.call({type:'employeeGet', data: {email: 'qwetyel@gmail.com'}}).then((data) => {
+      console.log(data)
+    })
+
     // update employee
     // webSocketControllerInstance
     //   .call({ type: "employeeGet", data: { id: "5f8a1497806a3424eaec10db" } })
