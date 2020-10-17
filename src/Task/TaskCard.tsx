@@ -15,10 +15,10 @@ import { TextArea } from "./TextArea";
 import "./TaskCard.less";
 
 const fieldsToFill = ["title", "description"];
-const fieldsMap: {[key: string]: string} = {
-  title: 'название',
-  description: 'описание'
-}
+const fieldsMap: { [key: string]: string } = {
+  title: "название",
+  description: "описание",
+};
 
 export const TaskCard = (props: { taskId: string }) => {
   const [localTask, setLocalTask] = useState<ITask | null>(null);
@@ -34,6 +34,7 @@ export const TaskCard = (props: { taskId: string }) => {
   const [newTag, setNewTag] = useState("");
   const task = useTask(props.taskId);
   const person = usePerson(personId, update);
+  console.log('DD:', localTask)
   useEffect(() => {
     if (props.taskId !== "new") {
       if (task) {
@@ -41,7 +42,11 @@ export const TaskCard = (props: { taskId: string }) => {
         setPersonId(task.assignee);
       }
     } else {
-      setLocalTask({} as ITask);
+      setLocalTask({
+        ...localTask,
+        targetDate: new Date(),
+        creationDate: new Date(),
+      } as ITask);
     }
   }, [task]);
   useEffect(() => {
@@ -54,7 +59,8 @@ export const TaskCard = (props: { taskId: string }) => {
     }
   }, [task]);
   useEffect(() => {
-    if (helperState === fieldsToFill.length) {
+    console.log('DD:', helperState, fieldsToFill.length)
+    if (helperState >= fieldsToFill.length) {
       setHelperConnect(false);
     }
   }, [helperState]);
@@ -76,13 +82,19 @@ export const TaskCard = (props: { taskId: string }) => {
       {localTask ? (
         <div>
           <Clipboard
-            label={helperConnect ? fieldsMap[fieldsToFill[helperState]] : ''}
+            key={JSON.stringify(localTask)}
+            label={helperConnect ? fieldsMap[fieldsToFill[helperState]] : ""}
             connect={helperConnect}
             onStart={() => {
               setHelperConnect(true);
               setHelperState(0);
             }}
             onCopied={(value) => {
+              console.log('DD:', fieldsToFill[helperState])
+              if (!fieldsToFill[helperState]) {
+                return
+              }
+              console.log('DD:', value, helperState)
               setHelperState(helperState + 1);
               setLocalTask({
                 ...localTask,
@@ -190,12 +202,9 @@ export const TaskCard = (props: { taskId: string }) => {
             <div style={{ padding: "10px" }}>Выполнить до:</div>
             <div>
               <Input
-                value={
-                  new Date(localTask.targetDate).toISOString().split("T")[0]
-                }
+                value={(new Date(localTask.targetDate)).toISOString().split('T')[0]}
                 type={"date"}
                 onChange={(value) => {
-                  console.log(value);
                   setLocalTask({ ...localTask, targetDate: new Date(value) });
                 }}
               />
@@ -206,14 +215,12 @@ export const TaskCard = (props: { taskId: string }) => {
             onClick={() => {
               setDisabled(true);
               if (props.taskId === "new") {
-                localTask.targetDate = new Date();
-                localTask.creationDate = new Date();
                 taskCreate(localTask).then(() => {
                   window.history.back();
                   setDisabled(false);
                 });
               } else if (localTask) {
-                console.log(localTask)
+                localTask.targetDate = new Date(localTask.targetDate);
                 taskUpdate(localTask).then(() => setDisabled(false));
               }
             }}

@@ -55,6 +55,10 @@ app.get('/helper/', (req, res) => {
     res.send(indexFile);
 });
 
+app.get('/statistics/*', (req, res) => {
+    res.send(indexFile);
+});
+
 const clients = {};
 
 app.use(express.static(resourcesPath));
