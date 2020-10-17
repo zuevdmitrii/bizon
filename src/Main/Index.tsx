@@ -7,7 +7,6 @@ export const Index = (props: any) => {
     <PageTemplate>
       <div>
         Test cmp
-        <Clipboard />
       </div>
     </PageTemplate>
   );
