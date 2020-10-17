@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { ITask, useTasks } from "./useTasks";
-import "./Main.less";
 import { Button } from "./Components/Button";
 import { Input } from "../Task/Input";
 import { useState } from "react";
+import "./TasksList.less";
+import { ITask, useTasks } from "./useTasks";
 import { IDataProviderFilter, IFilter, Logic, Operator } from "../api/IFilter";
 import { Modal } from "./Components/Modal";
 import { DepartmentsModal } from "./DepartmentsModal";
@@ -38,7 +38,7 @@ export const TasksList = (props: ITasksListProps) => {
   };
 
   return (
-    <div>
+    <div className="listRoot">
       <div className={"list_root"}>
         <Input
           value={filterValue}
