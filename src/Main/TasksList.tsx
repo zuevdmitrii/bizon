@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { ITask, useTasks } from "./useTasks";
-import "./Main.less";
+import { useTasks } from "./useTasks";
+import "./TaskList.less";
 import { Button } from "./Components/Button";
 import { Input } from "../Task/Input";
 import { useState } from "react";
@@ -12,7 +12,7 @@ import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
 import { PersonsList } from "./PersonsList";
 
 interface ITasksListProps {
-  setTask?: (title: string, id: string) => void
+  setTask?: (title: string, id: string) => void;
 }
 
 export const TasksList = (props: ITasksListProps) => {
@@ -21,16 +21,16 @@ export const TasksList = (props: ITasksListProps) => {
   const { tasks, setTasks } = useTasks(filters, {}, {});
   const [departmentSearch, setDepartmentSearch] = useState(false);
   const [assignedSearch, setAssignedSearch] = useState(false);
-  
+
   const departmentFilter = async (value: string) => {
     const { data } = await taskGetByDepartment(value, undefined || filters);
     setTasks(data);
-    };
+  };
 
   const personFilter = async (value: string) => {
     const { data } = await taskGetByUser(value, undefined || filters);
     setTasks(data);
- };
+  };
 
   const simpleFilter = async (filters: IFilter[]) => {
     const { data } = await taskGetByUser(undefined, filters);
@@ -39,55 +39,67 @@ export const TasksList = (props: ITasksListProps) => {
 
   return (
     <div>
-      <div className={"list_root"}>
-        <Input
-          value={filterValue}
-          placeholder={"Поиск"}
-          onChange={(value) => setFilterValue(value)}
-        />
-        <Button
-          onClick={() => {
-            const currentFilters = [
-              {
-                field: "title",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-              {
-                field: "description",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-              {
-                field: "status",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-            ];
+      <div className={"filterRoot"}>
+        <div className={"list_root"}>
+          <Input
+            value={filterValue}
+            placeholder={"Поиск"}
+            onChange={(value) => setFilterValue(value)}
+          />
+          <div className={"buttonFilter"}>
+            <Button
+              onClick={() => {
+                const currentFilters = [
+                  {
+                    field: "title",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                  {
+                    field: "description",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                  {
+                    field: "status",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                ];
 
-            if (filters && filterValue) {
-              simpleFilter(currentFilters);
-            }
-             else {
-              filterValue
-                ? setFilters({
-                    logic: Logic.or,
-                    filters: currentFilters,
-                  })
-                : setFilters(null);
-            }
-          }}
-          caption={"Ок"}
-        />
+                if (filters && filterValue) {
+                  simpleFilter(currentFilters);
+                } else {
+                  filterValue
+                    ? setFilters({
+                        logic: Logic.or,
+                        filters: currentFilters,
+                      })
+                    : setFilters(null);
+                }
+              }}
+            caption={"Применить"}
+            />
+          </div>
+        </div>
+        <div className="personalizeFilters">
+          <div className={"buttonFilter"}>
+            <Button
+              icon={"fa fa-filter"}
+              caption={"Поиск по департаменту"}
+              onClick={() => setDepartmentSearch(true)}
+            />
+          </div>
+
+          <div className={"buttonFilter"}>
+            <Button
+              icon={"fa fa-filter"}
+              caption={"Поиск по контакту"}
+              onClick={() => setAssignedSearch(true)}
+            />
+          </div>
+        </div>
       </div>
-      <Button
-        caption={"Поиск по департаменту"}
-        onClick={() => setDepartmentSearch(true)}
-      />
-      <Button
-        caption={"Поиск по контакту"}
-        onClick={() => setAssignedSearch(true)}
-      />
       {tasks && tasks.length ? (
         <div>
           {tasks.map((task, index) => {
@@ -98,14 +110,15 @@ export const TasksList = (props: ITasksListProps) => {
                 </Link>
                 <div className={"listTitle"} key={index}>
                   {task.title}
-                  {props.setTask && <Button 
-                    caption="Выбрать"
-                    onClick={() => {
-                      props.setTask(task.title, task._id)
-                    }}
-                  />}
+                  {props.setTask && (
+                    <Button
+                      caption="Выбрать"
+                      onClick={() => {
+                        props.setTask(task.title, task._id);
+                      }}
+                    />
+                  )}
                 </div>
-
               </div>
             );
           })}
