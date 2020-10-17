@@ -213,6 +213,7 @@ export const TaskCard = (props: { taskId: string }) => {
                   setDisabled(false);
                 });
               } else if (localTask) {
+                console.log(localTask)
                 taskUpdate(localTask).then(() => setDisabled(false));
               }
             }}

@@ -9,9 +9,7 @@ export const useTask = (taskId: string) => {
   const fetchTask = async (id: string) => {
     setTask(null)
     const taskData = await taskGet(id);
-    console.log("taskData", taskData);
     if (taskData) {
-      console.log("task", taskData);
       setTask(taskData.data);
     }
   };
