@@ -52,7 +52,7 @@ export class WebSocketController {
 
   unRegisterCallback(callback: ICallbackMsg) {
     this.receivedMsgCallbacks.splice(
-      this.receivedMsgCallbacks.indexOf(callback)
+      this.receivedMsgCallbacks.indexOf(callback), 1
     );
   }
 
@@ -63,10 +63,10 @@ export class WebSocketController {
       this.queue.push(msg);
     }
   }
-  
+
   sendRaw(msg: any) {
     if(this.socketConnected) {
-      this.socket.send(JSON.stringify(msg))   
+      this.socket.send(JSON.stringify(msg))
     } else {
       this.queue.push(msg);
     }
