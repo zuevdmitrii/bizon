@@ -5,6 +5,7 @@ import { Input } from "../../Task/Input";
 import { webSocketControllerInstance } from "../../WebSocketInstance";
 import { Button } from "../Components/Button";
 import { IPerson } from "../usePersons";
+import { employeeCreate, employeeUpdate } from "../../api/EmployeeApi";
 
 export const PersonCard = (props: { personId: string }) => {
   const [localPerson, setLocalPerson] = useState<IPerson | null>(null);
@@ -51,13 +52,10 @@ export const PersonCard = (props: { personId: string }) => {
             disabled={disabled}
             onClick={() => {
               setDisabled(true);
-              webSocketControllerInstance
-                .call({ type: props.personId==='-1' ? "employeeCreate" : "employeeUpdate", data: localPerson })
-                .then((data) => {
-                  setDisabled(false);
-                });
+              props.personId==='new' ? employeeCreate(localPerson) : employeeUpdate(localPerson)
+              setDisabled(false)
             }}
-            caption={"Обновить"}
+            caption={props.personId==='new' ? 'Создать': "Обновить"}
           />
         </div>
       ) : (
