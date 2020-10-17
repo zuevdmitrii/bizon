@@ -1,4 +1,5 @@
 import { webSocketControllerInstance } from "../WebSocketInstance";
+import { IDataProviderFilter } from "./IFilter";
 
 export const employeeCreate = (
   data = {
@@ -16,7 +17,11 @@ export const employeeCreate = (
 
 // exampleId = 5f8a1497806a3424eaec10db
 // exEmail = qwetyel@gmail.com
-export const employeeGet = (id?: string, email?: string) => {
+export const employeeGet = (
+  id?: string,
+  email?: string,
+  filters?: IDataProviderFilter
+) => {
   if (id) {
     return webSocketControllerInstance.call({
       type: "employeeGet",
@@ -29,7 +34,10 @@ export const employeeGet = (id?: string, email?: string) => {
       data: { email },
     });
   }
-  return webSocketControllerInstance.call({ type: "employeeGet", data: {} });
+  return webSocketControllerInstance.call({
+    type: "employeeGet",
+    data: { filters },
+  });
 };
 
 export const employeeUpdate = (newEmployee: any) => {

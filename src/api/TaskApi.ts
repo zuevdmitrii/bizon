@@ -1,4 +1,5 @@
 import { webSocketControllerInstance } from "../WebSocketInstance";
+import { IDataProviderFilter }         from './IFilter';
 
 export const taskCreate = (
   data = {
@@ -17,11 +18,11 @@ export const taskCreate = (
 };
 
 // id= 5f8aa8cc8cf264325dc34edf
-export const taskGet = (id?: string) => {
+export const taskGet = (id?: string, filters?: IDataProviderFilter) => {
   if (id) {
     return webSocketControllerInstance.call({ type: "taskGet", data: { id } });
   }
-  return webSocketControllerInstance.call({ type: "taskGet", data: {} });
+  return webSocketControllerInstance.call({ type: "taskGet", data: {filters} });
 };
 
 export const taskUpdate = (newTask: any) => {
