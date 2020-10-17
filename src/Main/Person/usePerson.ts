@@ -1,14 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
 import { employeeGet } from "../../api/EmployeeApi";
+import { IPerson } from "../usePersons";
 
-interface IPerson {
-  _id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
 
 export const usePerson = (personId: string, update?: number) => {
   const [person, setPerson] = useState<IPerson | null>(null);

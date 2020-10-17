@@ -5,11 +5,12 @@ import { IDataProviderFilter } from '../api/IFilter';
 
 
 export interface IPerson {
-    _id: string
+  _id: string;
   email: string;
   firstName: string;
   lastName: string;
   role: string;
+  departament: string;
 }
 
 export const usePersons = (filters: IDataProviderFilter | null, sorting: IObjectAny, paging: IObjectAny)=>{

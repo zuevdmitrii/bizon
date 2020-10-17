@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Input } from "./Input";
 import { useTask } from "./useTask";
 import { Button } from "../Main/Components/Button";
-import { webSocketControllerInstance } from "../WebSocketInstance";
 import { ITask } from "../Main/useTasks";
 import { Clipboard } from "../Main/Clipboard/Clipboard";
 import { taskCreate, taskUpdate } from "../api/TaskApi";
@@ -116,9 +115,11 @@ export const TaskCard = (props: { taskId: string }) => {
               if (props.taskId === "new") {
                 localTask.targetDate = new Date();
                 localTask.creationDate = new Date();
-                taskCreate(localTask).then(() => setDisabled(false));
+                taskCreate(localTask).then(() => {
+                  window.history.back()
+                  setDisabled(false)
+                });
               } else if (localTask) {
-                console.log("id", localTask.assignee);
                 taskUpdate(localTask).then(() => setDisabled(false));
               }
             }}

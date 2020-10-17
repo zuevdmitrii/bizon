@@ -12,7 +12,7 @@ export const PersonsList = (props: {setUser?: (email: string, id: string) => voi
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const persons = usePersons(filters, {}, {});
-  console.log("persons", persons);
+ 
   return (
     <div>
       <Link to={`/person/new`} className="list__row-wrapper">
@@ -21,7 +21,7 @@ export const PersonsList = (props: {setUser?: (email: string, id: string) => voi
       <div className={"list_root"}>
         <Input
           value={filterValue}
-          label={"Поиск"}
+          placeholder={"Поиск"}
           onChange={(value) => setFilterValue(value)}
         />
 
