@@ -65,8 +65,7 @@ export const TasksList = (props: ITasksListProps) => {
                     value: filterValue,
                     operator: Operator.contains,
                   },
-                ];
-
+                ]
                 if (filters && filterValue) {
                   simpleFilter(currentFilters);
                 } else {
