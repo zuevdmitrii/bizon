@@ -4,11 +4,12 @@ import "./Clipboard.less";
 
 interface IProps {
   connect: boolean;
+  label?: string;
   onStart: () => void;
   onCopied: (value: string) => void;
 }
 
-export const Clipboard = ({ connect, onCopied, onStart }: IProps) => {
+export const Clipboard = ({ connect, onCopied, onStart, label }: IProps) => {
   const [socket, setSocket] = React.useState<WebSocketController>();
   const [callback, setCallback] = React.useState<ICallbackMsg | undefined>();
 
@@ -22,8 +23,8 @@ export const Clipboard = ({ connect, onCopied, onStart }: IProps) => {
         socket.unRegisterCallback(callback);
         setCallback(undefined);
       }
-    }
-  }, [socket, callback])
+    };
+  }, [socket, callback]);
 
   React.useEffect(() => {
     if (connect) {
@@ -42,9 +43,9 @@ export const Clipboard = ({ connect, onCopied, onStart }: IProps) => {
         payload: {},
       });
     } else {
-      unsubSocket()
+      unsubSocket();
     }
-    return unsubSocket
+    return unsubSocket;
   }, [connect, onCopied]);
 
   return (
@@ -60,10 +61,8 @@ export const Clipboard = ({ connect, onCopied, onStart }: IProps) => {
         </div>
       )}
       {callback && (
-        <div
-          className="button"
-          onClick={unsubSocket}
-        >
+        <div className="button" onClick={unsubSocket}>
+          {label ? `Выделите ${label} задачи и нажмите ctrl + c\т` : ""}
           Отключить помощника
         </div>
       )}
