@@ -10,21 +10,18 @@ interface IPerson {
   role: string;
 }
 
-export const usePerson = (personId: string) => {
+export const usePerson = (personId: string, update?: number) => {
   const [person, setPerson] = useState<IPerson | null>(null);
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (personId !=='new'){
-       employeeGet(personId).then((res) => {
-          res && res.data && setPerson(res.data);
-        })
-      } else {
-            setPerson({} as IPerson)
-        }
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (personId !== "new") {
+      employeeGet(personId).then((res) => {
+        res && res.data && setPerson(res.data);
+      });
+    } else {
+      setPerson({} as IPerson);
+    }
+  }, [update]);
 
   return person;
 };

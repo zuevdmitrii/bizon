@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { usePerson } from "./usePerson";
 import { Input } from "../../Task/Input";
-import { webSocketControllerInstance } from "../../WebSocketInstance";
 import { Button } from "../Components/Button";
 import { IPerson } from "../usePersons";
 import { employeeCreate, employeeUpdate } from "../../api/EmployeeApi";
@@ -10,7 +9,7 @@ import { employeeCreate, employeeUpdate } from "../../api/EmployeeApi";
 export const PersonCard = (props: { personId: string }) => {
   const [localPerson, setLocalPerson] = useState<IPerson | null>(null);
   const [disabled, setDisabled] = useState(false);
-  const person = usePerson(props.personId);
+const person= usePerson(props.personId);
 
   useEffect(() => {
     setLocalPerson(person);
@@ -27,6 +26,7 @@ export const PersonCard = (props: { personId: string }) => {
               setLocalPerson({ ...localPerson, email: value })
             }
           />
+
           <Input
             value={localPerson.firstName}
             label={"Имя"}
