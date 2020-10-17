@@ -5,6 +5,7 @@ const EmployeeScheme = new Schema({
     type: String,
     required: true
   },
+  password: String,
   firstName: {
     type: String,
     required: true
