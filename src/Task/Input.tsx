@@ -2,7 +2,7 @@ import * as React from "react";
 import "./Input.less";
 
 export const Input = (props: {
-  value: string;
+  value: string
   type?: "password" | "date" | "text";
   disabled?: boolean;
   password?: boolean;
@@ -17,7 +17,7 @@ export const Input = (props: {
         <input
           type={props.type ? props.type : "text"}
           disabled={props.disabled}
-          placeholder={props.label}
+          placeholder={props.placeholder}
           value={props.value}
           onChange={(value) => props.onChange(value.target.value)}
         />
