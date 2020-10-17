@@ -3,12 +3,51 @@ import { Link } from "react-router-dom";
 import { useTasks } from "./useTasks";
 import "./Main.less";
 import { Button } from "./Components/Button";
+import { Input } from "../Task/Input";
+import { useState } from "react";
+import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
 
 export const TasksList = () => {
-  const tasks = useTasks({}, {}, {});
+  const [filters, setFilters] = useState<IDataProviderFilter>();
+  const [filterValue, setFilterValue] = useState("");
+  const tasks = useTasks(filters, {}, {});
 
   return (
     <div>
+      <div className={"list_root"}>
+        <Input
+          value={filterValue}
+          label={"Поиск"}
+          onChange={(value) => setFilterValue(value)}
+        />
+
+        <Button
+          onClick={() =>
+            setFilters({
+              logic: Logic.or,
+              filters: [
+                {
+                  field: "title",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+                {
+                  field: "description",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+                {
+                  field: "status",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+              ],
+            })
+          }
+          caption={"Ок"}
+        />
+      </div>
+
       {tasks ? (
         <div>
           {tasks.map((task, index) => {

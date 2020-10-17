@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { employeeGet } from '../api/EmployeeApi';
+import { IDataProviderFilter } from '../api/IFilter';
 
 
 export interface IPerson {
@@ -10,8 +11,8 @@ export interface IPerson {
   role: string;
 }
 
-export const usePersons = (filters: IObjectAny, sorting: IObjectAny, paging: IObjectAny)=>{
-    const [persons, setPersons] = React.useState<IPerson[]| null>(null);
+export const usePersons = (filters: IDataProviderFilter, sorting: IObjectAny, paging: IObjectAny)=>{
+  const [persons, setPersons] = React.useState<IPerson[]| null>(null);
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       employeeGet().then((res) => {

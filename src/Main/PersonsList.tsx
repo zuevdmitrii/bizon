@@ -1,20 +1,56 @@
 import * as React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { employeeDelete } from "../api/EmployeeApi";
+import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
+import { Input } from "../Task/Input";
 import { Button } from "./Components/Button";
 import "./Main.less";
 import { usePersons } from "./usePersons";
 
 export const PersonsList = () => {
-  const persons = usePersons({}, {}, {});
+  const [filters, setFilters] = useState<IDataProviderFilter>();
+  const [filterValue, setFilterValue] = useState("");
+  const persons = usePersons(filters, {}, {});
 
   return (
     <div>
-
       <Link to={`/person/new`} className="list__row-wrapper">
         Создать нового сотрудника
       </Link>
+      <div className={"list_root"}>
+        <Input
+          value={filterValue}
+          label={"Поиск"}
+          onChange={(value) => setFilterValue(value)}
+        />
 
+        <Button
+          onClick={() =>
+            setFilters({
+              logic: Logic.or,
+              filters: [
+                {
+                  field: "firstName",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+                {
+                  field: "lastName",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+                {
+                  field: "department",
+                  value: filterValue,
+                  operator: Operator.contains,
+                },
+              ],
+            })
+          }
+          caption={"Ок"}
+        />
+      </div>
       {persons ? (
         persons.map((person, index) => {
           return (
@@ -28,7 +64,7 @@ export const PersonsList = () => {
               <Button
                 caption={"X"}
                 onClick={() => {
-                  employeeDelete(person._id)
+                  employeeDelete(person._id);
                 }}
               />
             </div>
