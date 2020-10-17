@@ -22,7 +22,7 @@ export const Auth = (props: IProps) => {
         }}
       />
       <Input
-        password
+        type={"password"}
         value={cred.pass}
         label={"Password"}
         onChange={(value) => {
