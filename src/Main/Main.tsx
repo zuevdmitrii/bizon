@@ -9,10 +9,14 @@ import { Persons }                        from './Persons';
 import { Logic, Operator }                from '../api/IFilter';
 import { employeeGet }                    from '../api/EmployeeApi';
 import { departmentGet }                  from '../api/DepartmentApi';
+import { taskGetByDepartment }            from '../api/TaskApi';
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
     const testFetch = async () => {
+      // const { data } = await taskGetByDepartment("hewlett packard");
+      // console.log(data)
+
       // const res = await taskCreate();
 
       // const { data } = await taskGet(undefined, {

@@ -35,3 +35,8 @@ export const taskUpdate = (newTask: any) => {
 export const taskDelete = (id: string) => {
   return webSocketControllerInstance.call({ type: "taskDelete", data: { id } });
 };
+
+export const taskGetByDepartment = (department: string) => {
+  console.log('ca;;')
+  return webSocketControllerInstance.call({ type: "taskGetByDepartment", data: { department } });
+}
