@@ -9,7 +9,7 @@ export const PageTemplate = (props: any) => {
     const [modal, setModal] = React.useState(false)
     return (
         <div className={'Bizon__main'}>
-            <Header/>
+            <Header />
             <div className={'Bizon__main__content'}>
                 <div>{props.children}</div>
             </div>

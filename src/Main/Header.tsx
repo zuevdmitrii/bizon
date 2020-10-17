@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
+import { Exit } from "./Exit";
 import "./Header.less"
 
 export const Header = (props: any) => {
@@ -16,6 +17,10 @@ export const Header = (props: any) => {
             <Link to={`/persons/`} className="header__menu">
                 Сотрудники
             </Link>
+
+            <Exit logout={() => {
+                window.location.reload()
+            }}/>
         </div>
     );
 };
