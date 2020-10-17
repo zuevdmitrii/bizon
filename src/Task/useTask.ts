@@ -7,7 +7,6 @@ export const useTask = (taskId: string) => {
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      //taskId
       setTask({
         title: "test title",
         description: "test description",

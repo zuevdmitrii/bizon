@@ -4,16 +4,9 @@ import { usePerson } from "./usePerson";
 import { Input } from "../../Task/Input";
 import { webSocketControllerInstance } from "../../WebSocketInstance";
 import { Button } from "../Components/Button";
+import { IPerson } from "../usePersons";
 
-interface IPerson {
-  _id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: string;
-}
-
-export const PersonCart = (props: { personId: string }) => {
+export const PersonCard = (props: { personId: string }) => {
   const [localPerson, setLocalPerson] = useState<IPerson | null>(null);
   const [disabled, setDisabled] = useState(false);
   const person = usePerson(props.personId);
@@ -59,7 +52,7 @@ export const PersonCart = (props: { personId: string }) => {
             onClick={() => {
               setDisabled(true);
               webSocketControllerInstance
-                .call({ type: "taskUpdate", data: localPerson })
+                .call({ type: props.personId==='-1' ? "employeeCreate" : "employeeUpdate", data: localPerson })
                 .then((data) => {
                   setDisabled(false);
                 });
