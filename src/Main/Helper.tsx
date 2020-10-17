@@ -20,7 +20,7 @@ export const Helper = () => {
           </a>
         </div>
         <div style={{ margin: "8px" }}>3. Разархивируйте скаченный файл</div>
-        <div style={{ margin: "8px" }}>4. Запустите файл start.but</div>
+        <div style={{ margin: "8px" }}>4. Запустите файл start.bat</div>
         <div style={{ margin: "8px" }}>5. Пользуйтесь</div>
       </div>
     </PageTemplate>
