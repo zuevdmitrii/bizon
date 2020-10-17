@@ -174,13 +174,11 @@ export const TaskCard = (props: { taskId: string }) => {
               if (props.taskId === "new") {
                 localTask.targetDate = new Date();
                 localTask.creationDate = new Date();
-                console.log("localTask", localTask);
                 taskCreate(localTask).then(() => {
                   window.history.back();
                   setDisabled(false);
                 });
               } else if (localTask) {
-                console.log("localTask", localTask);
                 taskUpdate(localTask).then(() => setDisabled(false));
               }
             }}
