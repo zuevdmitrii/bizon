@@ -17,6 +17,9 @@ export const Header = (props: any) => {
             <Link to={`/persons/`} className="header__menu">
                 Сотрудники
             </Link>
+            <Link to={`/helper/`} className="header__menu">
+                Помощь
+            </Link>
 
             <Exit logout={() => {
                 window.location.reload()

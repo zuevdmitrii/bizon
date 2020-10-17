@@ -10,15 +10,10 @@ import { Auth }                           from "./Auth/Auth";
 import { login }                          from "../api/LoginApi";
 import { useEffect }                      from 'react';
 import { employeeGet }                    from '../api/EmployeeApi';
+import { Helper } from "./Helper";
 
 export const Main = (props: HashMap<any>) => {
-//   useEffect(() => {
-//     const fetch = async () => {
-//       const {data} = await employeeGet('5f8aa9914f38f1001750cf23')
-//       console.log(data)
-//     }
-//     fetch()
-// }, [])
+
 
   const [logged, setLogged] = React.useState<boolean>(
     !!localStorage.getItem("token")
@@ -35,6 +30,8 @@ export const Main = (props: HashMap<any>) => {
             <Route path="/employes" exact component={Index} />
             <Route path="/tasks/" exact component={Tasks} />
             <Route path="/persons/" exact component={Persons} />
+            <Route path="/helper/" exact component={Helper} />
+
           </Router>
         </>
       ) : (
