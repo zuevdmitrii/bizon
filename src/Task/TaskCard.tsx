@@ -9,6 +9,7 @@ import { taskCreate, taskUpdate } from "../api/TaskApi";
 import { usePerson } from "../Main/Person/usePerson";
 import { Modal } from "../Main/Components/Modal";
 import { PersonsList } from "../Main/PersonsList";
+import { TasksList } from "../Main/TasksList";
 
 const fieldsToFill = ["title", "description"];
 
@@ -20,6 +21,8 @@ export const TaskCard = (props: { taskId: string }) => {
   const [personId, setPersonId] = useState("");
   const [personEmail, setPersonEmail] = useState("");
   const [showChoseAssignee, setChoseAssignee] = useState(false);
+  const [blockTaskWindow, setBlockTaskWindow] = useState(false);
+  const [blockTask, setBlockTask] = useState("");
   const [update, setUpdate] = useState(0);
   const task = useTask(props.taskId);
   const person = usePerson(personId, update);
@@ -85,6 +88,14 @@ export const TaskCard = (props: { taskId: string }) => {
             }}
           />
           <div>
+            Блокирующая задача:
+            {blockTask}
+            <Button
+              onClick={() => setBlockTaskWindow(true)}
+              caption={"Выбрать задачу"}
+            />
+          </div>
+          <div>
             Исполнитель:
             {personEmail}
             <Button
@@ -100,6 +111,18 @@ export const TaskCard = (props: { taskId: string }) => {
                   setLocalTask({ ...localTask, assignee: id });
                 }}
                 onClose={() => setChoseAssignee(false)}
+              />
+            </Modal>
+          )}
+          {blockTaskWindow && (
+            <Modal onClose={() => setBlockTaskWindow(false)}>
+              <TasksList
+                setTask={(title, id) => {
+                  setBlockTask(title);
+                  //@ts-ignore
+                  setLocalTask({ ...localTask, blockTask: id });
+                  setBlockTaskWindow(false)
+                }}
               />
             </Modal>
           )}
