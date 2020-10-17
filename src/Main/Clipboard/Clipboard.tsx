@@ -33,7 +33,7 @@ export const Clipboard = ({ connect, onCopied, onStart, label }: IProps) => {
       let webSocketController =
         socket || new WebSocketController("ws://localhost:8000/ws");
       const callback: ICallbackMsg = (res: any) => {
-        if (res && res.payload) {
+        if (res && res.payload && res.header && res.header.action === 'copied') {
           onCopied(res.payload.text);
         }
       };

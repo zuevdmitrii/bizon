@@ -82,7 +82,6 @@ export const TaskCard = (props: { taskId: string }) => {
       {localTask ? (
         <div>
           <Clipboard
-            key={JSON.stringify(localTask)}
             label={helperConnect ? fieldsMap[fieldsToFill[helperState]] : ""}
             connect={helperConnect}
             onStart={() => {
@@ -96,10 +95,12 @@ export const TaskCard = (props: { taskId: string }) => {
               }
               console.log('DD:', value, helperState)
               setHelperState(helperState + 1);
-              setLocalTask({
-                ...localTask,
+              setLocalTask(oldState => {
+                return {
+                ...oldState,
                 [fieldsToFill[helperState]]: value,
-              });
+              }}
+              );
             }}
           />
           <div style={{ margin: "18px 0" }}>
