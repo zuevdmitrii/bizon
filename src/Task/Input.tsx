@@ -17,7 +17,7 @@ export const Input = (props: {
         <input
           type={props.type ? props.type : "text"}
           disabled={props.disabled}
-          placeholder={props.label}
+          placeholder={props.placeholder}
           value={props.value}
           onChange={(value) => props.onChange(value.target.value)}
         />

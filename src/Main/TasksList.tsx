@@ -10,9 +10,10 @@ import { Modal } from "./Components/Modal";
 import { DepartmentsModal } from "./DepartmentsModal";
 import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
 import { PersonsList } from "./PersonsList";
+import { TasksTable } from "./TasksTable";
 
 interface ITasksListProps {
-  setTask?: (title: string, id: string) => void
+  setTask?: (title: string, id: string) => void;
 }
 
 export const TasksList = (props: ITasksListProps) => {
@@ -21,16 +22,16 @@ export const TasksList = (props: ITasksListProps) => {
   const { tasks, setTasks } = useTasks(filters, {}, {});
   const [departmentSearch, setDepartmentSearch] = useState(false);
   const [assignedSearch, setAssignedSearch] = useState(false);
-  
+
   const departmentFilter = async (value: string) => {
     const { data } = await taskGetByDepartment(value, undefined || filters);
     setTasks(data);
-    };
+  };
 
   const personFilter = async (value: string) => {
     const { data } = await taskGetByUser(value, undefined || filters);
     setTasks(data);
- };
+  };
 
   const simpleFilter = async (filters: IFilter[]) => {
     const { data } = await taskGetByUser(undefined, filters);
@@ -38,80 +39,90 @@ export const TasksList = (props: ITasksListProps) => {
   };
 
   return (
-    <div className="listRoot">
+    <div>
       <div className={"list_root"}>
-        <Input
-          value={filterValue}
-          placeholder={"Поиск"}
-          onChange={(value) => setFilterValue(value)}
+        <div className={"task-list-title-row"}>
+          <span className={"task-list-title"}>Задачи</span>
+        </div>
+        <div className={"task-list-action-row"}>
+          <div className={'task-list-action-item'}>
+            <Link to={`/task/new/`} className="list__row-wrapper">
+              <Button onClick={() => {}} caption={"Создать задачу"} />
+            </Link>
+          </div>
+          <div className={"task-list-action-item"}>
+            <Input
+              value={filterValue}
+              placeholder={"Поиск по задачам..."}
+              onChange={(value) => setFilterValue(value)}
+            />
+            <Button
+              onClick={() => {
+                const currentFilters = [
+                  {
+                    field: "title",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                  {
+                    field: "description",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                  {
+                    field: "status",
+                    value: filterValue,
+                    operator: Operator.contains,
+                  },
+                ];
+
+                if (filters && filterValue) {
+                  simpleFilter(currentFilters);
+                } else {
+                  filterValue
+                    ? setFilters({
+                        logic: Logic.or,
+                        filters: currentFilters,
+                      })
+                    : setFilters(null);
+                }
+              }}
+              caption={"Ок"}
+            />
+          </div>
+        </div>
+        <Button
+          caption={"Поиск по департаменту"}
+          onClick={() => setDepartmentSearch(true)}
         />
         <Button
-          onClick={() => {
-            const currentFilters = [
-              {
-                field: "title",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-              {
-                field: "description",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-              {
-                field: "status",
-                value: filterValue,
-                operator: Operator.contains,
-              },
-            ];
-
-            if (filters && filterValue) {
-              simpleFilter(currentFilters);
-            }
-             else {
-              filterValue
-                ? setFilters({
-                    logic: Logic.or,
-                    filters: currentFilters,
-                  })
-                : setFilters(null);
-            }
-          }}
-          caption={"Ок"}
+          caption={"Поиск по контакту"}
+          onClick={() => setAssignedSearch(true)}
         />
       </div>
-      <Button
-        caption={"Поиск по департаменту"}
-        onClick={() => setDepartmentSearch(true)}
-      />
-      <Button
-        caption={"Поиск по контакту"}
-        onClick={() => setAssignedSearch(true)}
-      />
+
       {tasks && tasks.length ? (
         <div>
-          {tasks.map((task, index) => {
-            return (
-              <div className="list_root" key={index}>
-                <Link to={`/task/${task._id}`} className="list__row-wrapper">
-                  Открыть
-                </Link>
-                <div className={"listTitle"} key={index}>
-                  {task.title}
-                  {props.setTask && <Button 
-                    caption="Выбрать"
-                    onClick={() => {
-                      props.setTask(task.title, task._id)
-                    }}
-                  />}
-                </div>
+          <TasksTable tasks={tasks} setTask={props.setTask} />
+          {/*{tasks.map((task, index) => {*/}
+          {/*  return (*/}
+          {/*    <div className="list_root" key={index}>*/}
+          {/*      <Link to={`/task/${task._id}`} className="list__row-wrapper">*/}
+          {/*        Открыть*/}
+          {/*      </Link>*/}
+          {/*      <div className={"listTitle"} key={index}>*/}
+          {/*        {task.title}*/}
+          {/*        {props.setTask && <Button */}
+          {/*          caption="Выбрать"*/}
+          {/*          onClick={() => {*/}
+          {/*            props.setTask(task.title, task._id)*/}
+          {/*          }}*/}
+          {/*        />}*/}
+          {/*      </div>*/}
 
-              </div>
-            );
-          })}
-          <Link to={`/task/new/`} className="list__row-wrapper">
-            <Button onClick={() => {}} caption={"Создать задачу"} />
-          </Link>
+          {/*    </div>*/}
+          {/*  );*/}
+          {/*})}*/}
         </div>
       ) : tasks ? (
         <div>Список пуст</div>
