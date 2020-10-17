@@ -1,4 +1,5 @@
 import * as React from "react";
+import {taskGet} from "../api/TaskApi";
 
 export interface ITask {
   _id: string;
@@ -16,14 +17,14 @@ export const useTasks = (
   paging: IObjectAny
 ) => {
   const [tasks, setTasks] = React.useState<ITask[] | null>(null);
+  const fetchTasks = async () => {
+    const tasksData = await taskGet()
+    if (tasksData) {
+      setTasks(tasksData.data)
+    }
+  }
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      setTasks([
-        { _id: "5f8aa90153c4fb3272648d12", title: "task1", description: "q" } as ITask,
-        { _id: "two", title: "task2" } as ITask,
-      ]);
-    }, 1000);
-    return () => clearTimeout(timeout);
+    fetchTasks()
   }, []);
   return tasks;
 };
