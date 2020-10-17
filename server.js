@@ -18,7 +18,6 @@ const indexFile = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 app.get('/task/*', (req, res) => {
     res.send(indexFile);
 });
-
 app.get('/employes/*', (req, res) => {
     res.send(indexFile);
 });
@@ -28,6 +27,10 @@ app.get('/tasks/*', (req, res) => {
 });
 
 app.get('/persons/*', (req, res) => {
+    res.send(indexFile);
+});
+
+app.get('/person/*', (req, res) => {
     res.send(indexFile);
 });
 
