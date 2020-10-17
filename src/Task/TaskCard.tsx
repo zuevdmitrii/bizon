@@ -12,6 +12,7 @@ import { PersonsList } from "../Main/PersonsList";
 import { TasksList } from "../Main/TasksList";
 import { Link } from "react-router-dom";
 import { TextArea } from "./TextArea";
+import "./TaskCard.less";
 
 const fieldsToFill = ["title", "description"];
 
@@ -84,42 +85,25 @@ export const TaskCard = (props: { taskId: string }) => {
               });
             }}
           />
-          <Input
-            value={localTask.title}
-            label={"Title"}
-            onChange={(value) => {
-              setLocalTask({ ...localTask, title: value });
-            }}
-          />
-          <TextArea
-            value={localTask.description}
-            label={"Description"}
-            onChange={(value) => {
-              setLocalTask({ ...localTask, description: value });
-            }}
-          />
-          <div key={props.taskId}>
-            Блокирующая задача:
-            {blockTask && (
-              <Link to={`/task/${localTask.blockTask}`}>{blockTask}</Link>
-            )}
-            <Button
-              onClick={() => setBlockTaskWindow(true)}
-              caption={"Выбрать задачу"}
+          <div style={{ margin: "18px 0" }}>
+            <Input
+              value={localTask.title}
+              placeholder={"Задача..."}
+              onChange={(value) => {
+                setLocalTask({ ...localTask, title: value });
+              }}
             />
           </div>
-          <div>
-            Исполнитель:
-            {personEmail}
-            <Button
-              onClick={() => setChoseAssignee(true)}
-              caption={"Выбрать исполнителя"}
-            />
+          <div
+            style={{ margin: "18px 0" }}
+            onClick={() => setChoseAssignee(true)}
+          >
+            <Input value={personEmail} placeholder={"Исполнитель"} />
           </div>
           {showChoseAssignee && (
             <Modal onClose={() => setChoseAssignee(false)}>
               <PersonsList
-                setUser={(id,email) => {
+                setUser={(id, email) => {
                   setPersonEmail(email);
                   setLocalTask({ ...localTask, assignee: id });
                 }}
@@ -127,6 +111,25 @@ export const TaskCard = (props: { taskId: string }) => {
               />
             </Modal>
           )}
+          <TextArea
+            value={localTask.description}
+            onChange={(value) => {
+              setLocalTask({ ...localTask, description: value });
+            }}
+          />
+          <div
+            key={props.taskId}
+            style={{ marginTop: "18px", marginBottom: "8px" }}
+          >
+            Блокирующая задача:{" "}
+            {blockTask && (
+              <Link to={`/task/${localTask.blockTask}`}>{blockTask}</Link>
+            )}
+          </div>
+          <Button
+            onClick={() => setBlockTaskWindow(true)}
+            caption={"Выбрать задачу"}
+          />
           {blockTaskWindow && (
             <Modal onClose={() => setBlockTaskWindow(false)}>
               <TasksList
@@ -138,16 +141,27 @@ export const TaskCard = (props: { taskId: string }) => {
               />
             </Modal>
           )}
-          <Input
-            value={localTask.status}
-            label={"Status"}
-            onChange={(value) => setLocalTask({ ...localTask, status: value })}
-          />
+          <div style={{ margin: "18px 0" }}>
+            <Input
+              value={localTask.status}
+              onChange={(value) =>
+                setLocalTask({ ...localTask, status: value })
+              }
+            />
+          </div>
           {localTask.tags &&
-            localTask.tags.map((tag: string, index: number) => (
-              <>{index > 0 ? `, ${tag}` : tag}</>
-            ))}
+            localTask.tags.map((tag: string, index: number) =>
+              index > 0 ? (
+                <>
+                  {" "}
+                  <span className={"tag"}>{tag}</span>
+                </>
+              ) : (
+                <span className={"tag"}>{tag}</span>
+              )
+            )}
           <div
+            style={{ margin: "18px 0" }}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 if (localTask.tags) {
@@ -164,8 +178,23 @@ export const TaskCard = (props: { taskId: string }) => {
             <Input
               value={newTag}
               onChange={(value) => setNewTag(value)}
-              label={"Новый тег"}
+              placeholder={"Новый тег"}
             />
+          </div>
+          <div style={{ display: "flex", marginBottom: "18px" }}>
+            <div style={{ padding: "10px" }}>Выполнить до:</div>
+            <div>
+              <Input
+                value={
+                  new Date(localTask.targetDate).toISOString().split("T")[0]
+                }
+                type={"date"}
+                onChange={(value) => {
+                  console.log(value);
+                  setLocalTask({ ...localTask, targetDate: new Date(value) });
+                }}
+              />
+            </div>
           </div>
           <Button
             disabled={disabled}
