@@ -45,7 +45,7 @@ export const TasksList = (props: ITasksListProps) => {
           <span className={"task-list-title"}>Задачи</span>
         </div>
         <div className={"task-list-action-row"}>
-          <div className={'task-list-action-item'}>
+          <div className={"task-list-action-item"}>
             <Link to={`/task/new/`} className="list__row-wrapper">
               <Button onClick={() => {}} caption={"Создать задачу"} />
             </Link>
@@ -91,14 +91,18 @@ export const TasksList = (props: ITasksListProps) => {
             />
           </div>
         </div>
-        <Button
-          caption={"Поиск по департаменту"}
-          onClick={() => setDepartmentSearch(true)}
-        />
-        <Button
-          caption={"Поиск по контакту"}
-          onClick={() => setAssignedSearch(true)}
-        />
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: "8px" }}>
+            <Button
+              caption={"Поиск по департаменту"}
+              onClick={() => setDepartmentSearch(true)}
+            />
+          </div>
+          <Button
+            caption={"Поиск по контакту"}
+            onClick={() => setAssignedSearch(true)}
+          />
+        </div>
       </div>
 
       {tasks && tasks.length ? (
