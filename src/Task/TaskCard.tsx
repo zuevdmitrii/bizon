@@ -202,7 +202,7 @@ export const TaskCard = (props: { taskId: string }) => {
             <div style={{ padding: "10px" }}>Выполнить до:</div>
             <div>
               <Input
-                value={localTask.targetDate.toISOString().split('T')[0]}
+                value={(new Date(localTask.targetDate)).toISOString().split('T')[0]}
                 type={"date"}
                 onChange={(value) => {
                   setLocalTask({ ...localTask, targetDate: new Date(value) });
