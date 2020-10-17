@@ -12,6 +12,7 @@ const login = require('./server/handlers/login/login')
 const getDepartments = require('./server/handlers/departments/getDepartments')
 
 const getTasksByDepartment = require('./server/handlers/tasks/getTasksByDepartment')
+const getTasksByUser = require('./server/handlers/tasks/getTasksByUser')
 
 const mongoose = require("mongoose");
 const root = process.cwd(),
@@ -106,6 +107,9 @@ app.use(express.static(resourcesPath));
 
         async function handleMessage(data, id) {
             switch (data.type) {
+                case "taskGetByUser":
+                    getTasksByUser(clients, id, data)
+                    break;
                 case "taskGetByDepartment":
                     getTasksByDepartment(clients, id, data)
                     break

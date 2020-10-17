@@ -8,19 +8,30 @@ import { PersonDetail } from "./Person/PersonDetail";
 import { Persons } from "./Persons";
 import { Logic, Operator } from "../api/IFilter";
 import { employeeGet } from "../api/EmployeeApi";
-import { departmentGet } from "../api/DepartmentApi";
-import { taskGetByDepartment } from "../api/TaskApi";
+import { departmentGet }                      from "../api/DepartmentApi";
+import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
 
 export const Main = (props: HashMap<any>) => {
   React.useEffect(() => {
     const testFetch = async () => {
-      // const { data } = await taskGetByDepartment("hewlett packard");
-      // const { data } = await taskGetByDepartment("samsung", {
-      //   logic: Logic.and,
-      //   filters: [
-      //     { field: "description", value: "s", operator: Operator.contains },
-      //   ],
-      // });
+      // // const { data } = await taskGetByDepartment("hewlett packard");
+      // const { data } = await taskGetByDepartment("apple",
+      // //   {
+      // //   logic: Logic.and,
+      // //   filters: [
+      // //     { field: "assignee.email", value: "mail", operator: Operator.contains },
+      // //   ],
+      // // }
+      // );
+      //
+      // const { data } = await taskGetByUser("5f8a7fe0b7fd6214507fef3c",
+      //     {
+      //     logic: Logic.and,
+      //     filters: [
+      //       { field: "description", value: "1", operator: Operator.eq },
+      //     ],
+      //   }
+      // );
       // console.log(data)
 
       // const res = await taskCreate();

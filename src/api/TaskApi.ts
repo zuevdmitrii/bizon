@@ -39,3 +39,7 @@ export const taskDelete = (id: string) => {
 export const taskGetByDepartment = (department: string, filters?: any) => {
   return webSocketControllerInstance.call({ type: "taskGetByDepartment", data: { department, filters } });
 }
+
+export const taskGetByUser = (userId: string, filters?: any) => {
+  return webSocketControllerInstance.call({ type: "taskGetByUser", data: { userId, filters } });
+}
