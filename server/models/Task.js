@@ -7,12 +7,13 @@ const TaskScheme = new Schema({
   },
   description: String,
   assignee: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectID,
+    ref: 'Employee',
+    required: true
   },
   status: String,
   creationDate: Date,
-  targetData: Date,
+  targetDate: Date,
 });
 
 module.exports = model("Task", TaskScheme, "tasks");
