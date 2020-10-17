@@ -17,7 +17,7 @@ export const TasksList = () => {
       <div className={"list_root"}>
         <Input
           value={filterValue}
-          label={"Поиск"}
+          placeholder={"Поиск"}
           onChange={(value) => setFilterValue(value)}
         />
 
