@@ -8,10 +8,10 @@ export const Input = (props: {
 }) => {
   return (
     <div>
-      <p>{props.label}</p>
       <p>
         <input
           type={props.password ? 'password' : 'text'}
+          placeholder={props.label}
           value={props.value}
           onChange={(value) => props.onChange(value.target.value)}
         />
