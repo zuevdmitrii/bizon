@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { IDataProviderFilter } from "../api/IFilter";
-import {taskGet} from "../api/TaskApi";
+import { taskGet } from "../api/TaskApi";
 
 export interface ITask {
   _id: string;
@@ -20,25 +20,22 @@ export const useTasks = (
 ) => {
   const [tasks, setTasks] = React.useState<ITask[] | null>(null);
   const fetchTasks = async () => {
-    const tasksData = await taskGet()
+    const tasksData = await taskGet();
     if (tasksData) {
-      setTasks(tasksData.data)
+      setTasks(tasksData.data);
     }
-  }
-  useEffect(() => {
-    fetchTasks()
-  }, []);
+  };
 
-  const filterTasks = async () =>{
-    const {data} = await taskGet(undefined, filters)
+  const filterTasks = async () => {
+    const { data } = await taskGet(undefined, filters);
     if (data) {
-      setTasks(data)
+      setTasks(data);
     }
-  }
-  
-  useEffect(()=>{
-    filters && filterTasks()  
-  },[filters])
+  };
 
-  return tasks;
+  useEffect(() => {
+    filters ? filterTasks() : fetchTasks();
+  }, [filters]);
+
+  return { tasks, setTasks };
 };

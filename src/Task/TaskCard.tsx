@@ -95,7 +95,7 @@ export const TaskCard = (props: { taskId: string }) => {
           {showChoseAssignee && (
             <Modal onClose={() => setChoseAssignee(false)}>
               <PersonsList
-                setUser={(email, id) => {
+                setUser={(id,email) => {
                   setPersonEmail(email);
                   setLocalTask({ ...localTask, assignee: id });
                 }}

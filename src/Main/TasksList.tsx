@@ -1,16 +1,37 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { useTasks } from "./useTasks";
+import { ITask, useTasks } from "./useTasks";
 import "./Main.less";
 import { Button } from "./Components/Button";
 import { Input } from "../Task/Input";
 import { useState } from "react";
-import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
+import { IDataProviderFilter, IFilter, Logic, Operator } from "../api/IFilter";
+import { Modal } from "./Components/Modal";
+import { DepartmentsModal } from "./DepartmentsModal";
+import { taskGetByDepartment, taskGetByUser } from "../api/TaskApi";
+import { PersonsList } from "./PersonsList";
 
 export const TasksList = () => {
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
-  const tasks = useTasks(filters, {}, {});
+  const { tasks, setTasks } = useTasks(filters, {}, {});
+  const [departmentSearch, setDepartmentSearch] = useState(false);
+  const [assignedSearch, setAssignedSearch] = useState(false);
+  
+  const departmentFilter = async (value: string) => {
+    const { data } = await taskGetByDepartment(value, undefined || filters);
+    setTasks(data);
+    };
+
+  const personFilter = async (value: string) => {
+    const { data } = await taskGetByUser(value, undefined || filters);
+    setTasks(data);
+ };
+
+  const simpleFilter = async (filters: IFilter[]) => {
+    const { data } = await taskGetByUser(undefined, filters);
+    setTasks(data);
+  };
 
   return (
     <div>
@@ -20,34 +41,49 @@ export const TasksList = () => {
           placeholder={"Поиск"}
           onChange={(value) => setFilterValue(value)}
         />
-
         <Button
-          onClick={() =>
-            setFilters({
-              logic: Logic.or,
-              filters: [
-                {
-                  field: "title",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-                {
-                  field: "description",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-                {
-                  field: "status",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-              ],
-            })
-          }
+          onClick={() => {
+            const currentFilters = [
+              {
+                field: "title",
+                value: filterValue,
+                operator: Operator.contains,
+              },
+              {
+                field: "description",
+                value: filterValue,
+                operator: Operator.contains,
+              },
+              {
+                field: "status",
+                value: filterValue,
+                operator: Operator.contains,
+              },
+            ];
+
+            if (filters && filterValue) {
+              simpleFilter(currentFilters);
+            }
+             else {
+              filterValue
+                ? setFilters({
+                    logic: Logic.or,
+                    filters: currentFilters,
+                  })
+                : setFilters(null);
+            }
+          }}
           caption={"Ок"}
         />
       </div>
-
+      <Button
+        caption={"Поиск по департаменту"}
+        onClick={() => setDepartmentSearch(true)}
+      />
+      <Button
+        caption={"Поиск по контакту"}
+        onClick={() => setAssignedSearch(true)}
+      />
       {tasks && tasks.length ? (
         <div>
           {tasks.map((task, index) => {
@@ -70,6 +106,25 @@ export const TasksList = () => {
         <div>Список пуст</div>
       ) : (
         <div>Загрузка</div>
+      )}
+      {departmentSearch && (
+        <Modal onClose={() => setDepartmentSearch(false)}>
+          <DepartmentsModal
+            select={(value) => {
+              departmentFilter(value);
+            }}
+          />
+        </Modal>
+      )}
+      {assignedSearch && (
+        <Modal onClose={() => setAssignedSearch(false)}>
+          <PersonsList
+            setUser={(id) => {
+              personFilter(id);
+            }}
+            onClose={() => setAssignedSearch(false)}
+          />
+        </Modal>
       )}
     </div>
   );
