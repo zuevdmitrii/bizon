@@ -10,6 +10,7 @@ import { usePerson } from "../Main/Person/usePerson";
 import { Modal } from "../Main/Components/Modal";
 import { PersonsList } from "../Main/PersonsList";
 import { TasksList } from "../Main/TasksList";
+import { Link } from "react-router-dom";
 
 const fieldsToFill = ["title", "description"];
 
@@ -87,9 +88,9 @@ export const TaskCard = (props: { taskId: string }) => {
               setLocalTask({ ...localTask, description: value });
             }}
           />
-          <div>
+          <div key={props.taskId}>
             Блокирующая задача:
-            {blockTask}
+            {blockTask && <Link to={`/task/${localTask.blockTask}`}>{blockTask}</Link>}
             <Button
               onClick={() => setBlockTaskWindow(true)}
               caption={"Выбрать задачу"}
@@ -119,7 +120,6 @@ export const TaskCard = (props: { taskId: string }) => {
               <TasksList
                 setTask={(title, id) => {
                   setBlockTask(title);
-                  //@ts-ignore
                   setLocalTask({ ...localTask, blockTask: id });
                   setBlockTaskWindow(false)
                 }}

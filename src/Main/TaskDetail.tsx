@@ -5,6 +5,6 @@ import {TaskCard} from "../Task/TaskCard";
 
 export const TaskDetail = (props: any) => {
   return <PageTemplate>
-    <TaskCard taskId={props.match.params.id}/>
+    <TaskCard taskId={props.match.params.id} key={props.match.params.id}/>
   </PageTemplate>
 }

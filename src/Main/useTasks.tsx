@@ -11,6 +11,7 @@ export interface ITask {
   status: string;
   creationDate: Date;
   targetDate: Date;
+  blockTask: string;
 }
 
 export const useTasks = (
