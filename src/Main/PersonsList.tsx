@@ -8,11 +8,13 @@ import { Button } from "./Components/Button";
 import "./PersonsList.less";
 import { usePersons } from "./usePersons";
 
-export const PersonsList = (props: {setUser?: (email: string, id: string) => void, onClose?: () => void}) => {
+export const PersonsList = (props: {
+  setUser?: (id: string, email?: string) => void;
+  onClose?: () => void;
+}) => {
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const persons = usePersons(filters, {}, {});
- 
   return (
     <div className="listRoot">
       <Link to={`/person/new`} className="list__row-wrapper">
@@ -67,10 +69,15 @@ export const PersonsList = (props: {setUser?: (email: string, id: string) => voi
                   employeeDelete(person._id);
                 }}
               />
-                {props.setUser && <Button onClick={() => {
-                    props.setUser(person.email, person._id)
-                    props.onClose()
-                }} caption={'Выбрать'}/>}
+              {props.setUser && (
+                <Button
+                  onClick={() => {
+                    props.setUser(person._id, person.email);
+                    props.onClose();
+                  }}
+                  caption={"Выбрать"}
+                />
+              )}
             </div>
           );
         })

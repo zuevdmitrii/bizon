@@ -5,7 +5,6 @@ import { Input } from "../../Task/Input";
 import { Button } from "../Components/Button";
 import { IPerson } from "../usePersons";
 import { employeeCreate, employeeUpdate } from "../../api/EmployeeApi";
-import { departmentGet } from "../../api/DepartmentApi";
 import { DepartmentsModal } from "../DepartmentsModal";
 import { Modal } from "../Components/Modal";
 
@@ -14,16 +13,11 @@ export const PersonCard = (props: { personId: string }) => {
   const [disabled, setDisabled] = useState(false);
   const person = usePerson(props.personId);
   const [depModal, setDepModal] = useState(false);
-  const [allDepartments, setAllDepartments] = useState<string[]>([]);
 
   useEffect(() => {
     setLocalPerson(person);
   }, [person]);
 
-  const fetchDepartments = async () => {
-    const { data } = await departmentGet();
-    setAllDepartments(data);
-  };
 
   return (
     <div>
@@ -61,11 +55,10 @@ export const PersonCard = (props: { personId: string }) => {
           <div style={{display: 'flex', flexDirection: 'row'}}>
             <div> 
               
-              {`Департамент : ${localPerson.departament || 'Выберите департамент из списка'}`}
+              {`Департамент : ${localPerson.department || 'Выберите департамент из списка'}`}
             </div>
             <Button
               onClick={() => {
-                fetchDepartments();
                 setDepModal(true);
               }}
               caption={"Выбрать департамент"}
@@ -85,9 +78,8 @@ export const PersonCard = (props: { personId: string }) => {
           {depModal && (
             <Modal onClose={() => setDepModal(false)}>
               <DepartmentsModal
-                departmentsList={allDepartments}
                 select={(value: string) => {
-                  setLocalPerson({ ...localPerson, departament: value });
+                  setLocalPerson({ ...localPerson, department: value });
                 }}
               />
             </Modal>

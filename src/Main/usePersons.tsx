@@ -10,7 +10,7 @@ export interface IPerson {
   firstName: string;
   lastName: string;
   role: string;
-  departament: string;
+  department: string;
 }
 
 export const usePersons = (filters: IDataProviderFilter | null, sorting: IObjectAny, paging: IObjectAny)=>{
