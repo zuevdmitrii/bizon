@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect } from 'react';
 import { employeeGet } from '../api/EmployeeApi';
 import { IDataProviderFilter } from '../api/IFilter';
 
@@ -11,16 +12,24 @@ export interface IPerson {
   role: string;
 }
 
-export const usePersons = (filters: IDataProviderFilter, sorting: IObjectAny, paging: IObjectAny)=>{
+export const usePersons = (filters: IDataProviderFilter | null, sorting: IObjectAny, paging: IObjectAny)=>{
   const [persons, setPersons] = React.useState<IPerson[]| null>(null);
-  React.useEffect(() => {
-    const timeout = setTimeout(() => {
+  useEffect(() => {
       employeeGet().then((res) => {
           res && res.data && setPersons(res.data);
         })
-      ;
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
+    }, []);
+    const filterEmployees = async () =>{
+      const {data} = await employeeGet(undefined,undefined, filters)
+      
+      if (data) {
+        setPersons(data)
+      }
+    }
+    
+    useEffect(()=>{
+     filters && filterEmployees()  
+    },[filters])
+  
   return persons
 }
