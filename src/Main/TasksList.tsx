@@ -8,7 +8,7 @@ import { useState } from "react";
 import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
 
 export const TasksList = () => {
-  const [filters, setFilters] = useState<IDataProviderFilter>();
+  const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const tasks = useTasks(filters, {}, {});
 
@@ -48,7 +48,7 @@ export const TasksList = () => {
         />
       </div>
 
-      {tasks ? (
+      {tasks && tasks.length ? (
         <div>
           {tasks.map((task, index) => {
             return (
@@ -66,6 +66,8 @@ export const TasksList = () => {
             <Button onClick={() => {}} caption={"Создать задачу"} />
           </Link>
         </div>
+      ) : tasks ? (
+        <div>Список пуст</div>
       ) : (
         <div>Загрузка</div>
       )}

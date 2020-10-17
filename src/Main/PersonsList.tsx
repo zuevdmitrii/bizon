@@ -9,10 +9,10 @@ import "./Main.less";
 import { usePersons } from "./usePersons";
 
 export const PersonsList = () => {
-  const [filters, setFilters] = useState<IDataProviderFilter>();
+  const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const persons = usePersons(filters, {}, {});
-
+  console.log("persons", persons);
   return (
     <div>
       <Link to={`/person/new`} className="list__row-wrapper">
@@ -51,7 +51,7 @@ export const PersonsList = () => {
           caption={"Ок"}
         />
       </div>
-      {persons ? (
+      {persons && persons.length ? (
         persons.map((person, index) => {
           return (
             <div className="list_root" key={index}>
@@ -70,6 +70,8 @@ export const PersonsList = () => {
             </div>
           );
         })
+      ) : persons ? (
+        <div>Список пуст</div>
       ) : (
         <div>Загрузка</div>
       )}
