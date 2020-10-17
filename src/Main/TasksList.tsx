@@ -104,25 +104,6 @@ export const TasksList = (props: ITasksListProps) => {
       {tasks && tasks.length ? (
         <div>
           <TasksTable tasks={tasks} setTask={props.setTask} />
-          {/*{tasks.map((task, index) => {*/}
-          {/*  return (*/}
-          {/*    <div className="list_root" key={index}>*/}
-          {/*      <Link to={`/task/${task._id}`} className="list__row-wrapper">*/}
-          {/*        Открыть*/}
-          {/*      </Link>*/}
-          {/*      <div className={"listTitle"} key={index}>*/}
-          {/*        {task.title}*/}
-          {/*        {props.setTask && <Button */}
-          {/*          caption="Выбрать"*/}
-          {/*          onClick={() => {*/}
-          {/*            props.setTask(task.title, task._id)*/}
-          {/*          }}*/}
-          {/*        />}*/}
-          {/*      </div>*/}
-
-          {/*    </div>*/}
-          {/*  );*/}
-          {/*})}*/}
         </div>
       ) : tasks ? (
         <div>Список пуст</div>
