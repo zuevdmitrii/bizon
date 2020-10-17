@@ -25,6 +25,11 @@ const HistoryScheme = new Schema({
   date: {
     type: Date,
     required: true
+  },
+  tags: [String],
+  blockTask: {
+    type: Schema.Types.ObjectID,
+    ref: 'Task'
   }
 })
 
