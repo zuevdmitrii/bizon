@@ -14,6 +14,10 @@ import { Link } from "react-router-dom";
 import { TextArea } from "./TextArea";
 
 const fieldsToFill = ["title", "description"];
+const fieldsMap: {[key: string]: string} = {
+  title: 'название',
+  description: 'описание'
+}
 
 export const TaskCard = (props: { taskId: string }) => {
   const [localTask, setLocalTask] = useState<ITask | null>(null);
@@ -71,6 +75,7 @@ export const TaskCard = (props: { taskId: string }) => {
       {localTask ? (
         <div>
           <Clipboard
+            label={helperConnect ? fieldsMap[fieldsToFill[helperState]] : ''}
             connect={helperConnect}
             onStart={() => {
               setHelperConnect(true);
