@@ -6,7 +6,7 @@ export const Helper = () => {
     <PageTemplate>
       <div className={"listRoot"}>
         <div style={{ margin: "8px" }}>
-          <a href={"https://nodejs.org/ru/download/"} target={"_blank"}>
+          <a href={"https://nodejs.org/dist/v12.19.0/node-v12.19.0-x64.msi"} target={"_blank"}>
            1. Скачайте и установите node.js
           </a>
         </div>
