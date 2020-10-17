@@ -14,6 +14,7 @@ const TaskScheme = new Schema({
   status: String,
   creationDate: Date,
   targetDate: Date,
+  tags: [String]
 });
 
 module.exports = model("Task", TaskScheme, "tasks");
