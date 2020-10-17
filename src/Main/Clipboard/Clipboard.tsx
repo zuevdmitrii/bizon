@@ -14,6 +14,7 @@ export const Clipboard = ({ connect, onCopied, onStart, label }: IProps) => {
   const [callback, setCallback] = React.useState<ICallbackMsg | undefined>();
 
   const unsubSocket = React.useMemo(() => {
+    console.log("DD:", 'UNSUB')
     return function unsubSocket() {
       if (socket && callback) {
         socket.sendRaw({
@@ -28,6 +29,7 @@ export const Clipboard = ({ connect, onCopied, onStart, label }: IProps) => {
 
   React.useEffect(() => {
     if (connect) {
+      console.log("DD:", 'SUB')
       let webSocketController =
         socket || new WebSocketController("ws://localhost:8000/ws");
       const callback: ICallbackMsg = (res: any) => {
@@ -62,7 +64,8 @@ export const Clipboard = ({ connect, onCopied, onStart, label }: IProps) => {
       )}
       {callback && (
         <div className="button" onClick={unsubSocket}>
-          {label ? `Выделите ${label} задачи и нажмите ctrl + c\т` : ""}
+          {label ? `Выделите ${label} задачи и нажмите ctrl + c` : ""}
+          <br/>
           Отключить помощника
         </div>
       )}
