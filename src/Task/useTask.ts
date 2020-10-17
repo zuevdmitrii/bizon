@@ -7,6 +7,7 @@ export const useTask = (taskId: string) => {
   const [task, setTask] = useState<ITask | null>(null);
 
   const fetchTask = async (id: string) => {
+    setTask(null)
     const taskData = await taskGet(id);
     console.log("taskData", taskData);
     if (taskData) {
@@ -16,7 +17,7 @@ export const useTask = (taskId: string) => {
   };
   React.useEffect(() => {
     fetchTask(taskId);
-  }, []);
+  }, [taskId]);
 
   return task;
 };

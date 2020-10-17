@@ -7,7 +7,11 @@ import { Input } from "../Task/Input";
 import { useState } from "react";
 import { IDataProviderFilter, Logic, Operator } from "../api/IFilter";
 
-export const TasksList = () => {
+interface ITasksListProps {
+  setTask?: (title: string, id: string) => void
+}
+
+export const TasksList = (props: ITasksListProps) => {
   const [filters, setFilters] = useState<IDataProviderFilter | null>();
   const [filterValue, setFilterValue] = useState("");
   const tasks = useTasks(filters, {}, {});
@@ -58,7 +62,14 @@ export const TasksList = () => {
                 </Link>
                 <div className={"listTitle"} key={index}>
                   {task.title}
+                  {props.setTask && <Button 
+                    caption="Выбрать"
+                    onClick={() => {
+                      props.setTask(task.title, task._id)
+                    }}
+                  />}
                 </div>
+
               </div>
             );
           })}
