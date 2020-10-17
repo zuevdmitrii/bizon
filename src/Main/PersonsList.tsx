@@ -8,7 +8,6 @@ import { Button } from "./Components/Button";
 import "./PersonsList.less";
 import { usePersons } from "./usePersons";
 
-
 export const PersonsList = (props: {
   setUser?: (id: string, email?: string) => void;
   onClose?: () => void;
@@ -19,107 +18,118 @@ export const PersonsList = (props: {
   const history = useHistory();
 
   return (
-    <div className="listRoot">
-      <Link to={`/person/new`} className="list__row-wrapper">
-        Создать нового сотрудника
-      </Link>
-      <div className={"list_root"}>
-        <Input
-          value={filterValue}
-          placeholder={"Поиск"}
-          onChange={(value) => setFilterValue(value)}
-        />
-
+    <>
+      <div className={"filtersRoot"}>
+        <div className={'findAll'}>
+          <Input
+            value={filterValue}
+            placeholder={"Поиск"}
+            onChange={(value) => setFilterValue(value)}
+          />
+          <div className={"filterButton"}>
+            <Button
+              onClick={() =>
+                setFilters({
+                  logic: Logic.or,
+                  filters: [
+                    {
+                      field: "firstName",
+                      value: filterValue,
+                      operator: Operator.contains,
+                    },
+                    {
+                      field: "lastName",
+                      value: filterValue,
+                      operator: Operator.contains,
+                    },
+                    {
+                      field: "department",
+                      value: filterValue,
+                      operator: Operator.contains,
+                    },
+                  ],
+                })
+              }
+              caption={"Применить"}
+            />
+          </div>
+        </div>
         <Button
-          onClick={() =>
-            setFilters({
-              logic: Logic.or,
-              filters: [
-                {
-                  field: "firstName",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-                {
-                  field: "lastName",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-                {
-                  field: "department",
-                  value: filterValue,
-                  operator: Operator.contains,
-                },
-              ],
-            })
-          }
-          caption={"Ок"}
+          onClick={() => {
+            history.push(`/person/new`);
+          }}
+          caption={"Создать нового сотрудника"}
         />
       </div>
-      {persons && persons.length ? (
-        <table width={"100%"}>
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Выполнены</th>
-              <th>В работе</th>
-              <th>Количество</th>
-              <th></th>
-              {props.setUser && <th></th>}
-            </tr>
-          </thead>
-          <tbody>
-            {persons.map((person, index) => {
-              return (
-                <tr className={'personTr'} key={index}>
-                  <td></td>
-                  <td
-                    className={"listTitle"}
-                    onClick={() => {
-                      console.log("there");
-                      history.push(`/person/${person._id}`);
-                    }}
-                  >
-                    <div>
-                      {" "}
-                      {person.firstName + " "} {person.lastName}
-                    </div>
-                    <div className='subText'> {person.role} </div>
-                    <div className='subText'>{person.department}</div>
-                  </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <Button
-                      caption={"X"}
+
+      <div className="listRoot">
+        {persons && persons.length ? (
+          <table width={"100%"}>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Выполнены</th>
+                <th>В работе</th>
+                <th>Количество</th>
+                <th></th>
+                {props.setUser && <th></th>}
+              </tr>
+            </thead>
+            <tbody>
+              {persons.map((person, index) => {
+                const done = Math.random() * 10 
+                const wip = Math.random() * 10
+                const count = Math.floor(done) + Math.floor(wip)
+                return (
+                  <tr className={"personTr"} key={index}>
+                    <td></td>
+                    <td
+                      className={"listTitle"}
                       onClick={() => {
-                        employeeDelete(person._id);
+                        history.push(`/person/${person._id}`);
                       }}
-                    />
-                  </td>
-                  {props.setUser && (
-                    <td>
+                    >
+                      <div>
+                        {" "}
+                        {person.firstName + " "} {person.lastName}
+                      </div>
+                      <div className="subText"> {person.role} </div>
+                      <div className="subText">{person.department}</div>
+                    </td>
+                    <td>{Math.floor(done)}</td>
+                    <td>{Math.floor(wip)}</td>
+                    <td>{count}</td>
+                    <td width={"100px"}>
                       <Button
+                        caption={"Удалить"}
                         onClick={() => {
-                          props.setUser(person._id, person.email);
-                          props.onClose();
+                          employeeDelete(person._id);
                         }}
-                        caption={"Выбрать"}
                       />
                     </td>
-                  )}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      ) : persons ? (
-        <div>Список пуст</div>
-      ) : (
-        <div>Загрузка</div>
-      )}
-    </div>
+                    {props.setUser && (
+                      <td>
+                        <Button
+                          onClick={() => {
+                            props.setUser(person._id, person.email);
+                            props.onClose();
+                          }}
+                          caption={"Выбрать"}
+                        />
+                      </td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : persons ? (
+          <div>Список пуст</div>
+        ) : (
+          <div>Загрузка</div>
+        )}
+      </div>
+    </>
   );
 };
