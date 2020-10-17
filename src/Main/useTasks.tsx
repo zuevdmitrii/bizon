@@ -1,4 +1,5 @@
 import * as React from "react";
+import { IDataProviderFilter } from "../api/IFilter";
 import {taskGet} from "../api/TaskApi";
 
 export interface ITask {
@@ -12,7 +13,7 @@ export interface ITask {
 }
 
 export const useTasks = (
-  filters: IObjectAny,
+  filters: IDataProviderFilter,
   sorting: IObjectAny,
   paging: IObjectAny
 ) => {

@@ -58,9 +58,9 @@ export const BreadCrumbs = () => {
   return (
     <div>
       {path
-        ? path.map((item: IObjectAny) => {
+        ? path.map((item: IObjectAny, idx: number) => {
             return item.path.includes("/") ? (
-              <Link to={`${item.path}`} className="list__row-wrapper">
+              <Link key={idx} to={`${item.path}`} className="list__row-wrapper">
                 {item.title}
               </Link>
             ) : (

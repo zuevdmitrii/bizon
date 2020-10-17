@@ -7,9 +7,9 @@ export const Input = (props: {
 }) => {
   return (
     <div>
-      <p>{props.label}</p>
       <p>
         <input
+          placeholder={props.label}
           value={props.value}
           onChange={(value) => props.onChange(value.target.value)}
         />
